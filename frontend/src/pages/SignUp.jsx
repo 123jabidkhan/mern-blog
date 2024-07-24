@@ -2,13 +2,17 @@ import { useState } from "react";
 import { Button, Spinner } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useDispatch,useSelector } from "react-redux";
+import { signInStart, signInSuccess, signInFailure } from "../redux/user/userSlice";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
+  // const [loading, setLoading] = useState(false);
+  // const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
+  const  {loading, error:errorMessage} = useSelector((state)=>state.user);
+  
   // input on change
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,23 +23,27 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.username || !formData.email || !formData.password) {
-      return setErrorMessage("All fields are required.");
+      return dispatch(signInFailure("All fields are required."));
     }
     try {
-      setLoading(true);
-      setErrorMessage(null);
+      // ..without Redux..
+      // setLoading(true);
+      // setErrorMessage(null);
+
+      // wih Redux, loading start and error value set null:
+      dispatch(signInStart());
       const res = await axios.post("/api/auth/signup", formData);
       if (res.data.success === false) {
-        return setErrorMessage(res.data.message);
-      }
-      setLoading(false);
+        return dispatch(signInFailure(res.data.message));
+      }      
+      // if response ok
       if (res.statusText) {
+        dispatch(signInSuccess(res.data.message));
         navigate("/sign-in");
       }
       console.log(res.data);
     } catch (error) {
-      setErrorMessage(error.response.data.message);
-      setLoading(false);
+      dispatch(signInFailure(error.response.data.message));
     }
   };
 

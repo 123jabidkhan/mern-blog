@@ -2,12 +2,16 @@ import { useState } from "react";
 import { Button, Spinner } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useDispatch,useSelector } from "react-redux";
+import { signInStart, signInSuccess, signInFailure } from "../redux/user/userSlice";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
+  // const [loading, setLoading] = useState(false);
+  // const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const  {loading, error:errorMessage} = useSelector((state)=>state.user);
 
   // input on change
   const handleChange = (e) => {
@@ -19,23 +23,29 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.email || !formData.password) {
-      return setErrorMessage("All fields are required.");
+      return dispatch(signInFailure("All fields are required."));
     }
     try {
-      setLoading(true);
-      setErrorMessage(null);
+      // without Redux
+      // setLoading(true);
+      // setErrorMessage(null);
+
+       // wih Redux, loading start and error value set null:
+       dispatch(signInStart());
+
       const res = await axios.post("/api/auth/signin", formData);
       if (res.data.success === false) {
-        return setErrorMessage(res.data.message);
+        return dispatch(signInFailure(res.data.message));
       }
-      setLoading(false);
+
+      // if response ok
       if (res.statusText) {
+        dispatch(signInSuccess(res.data.message));
         navigate("/");
       }
       console.log(res.data);
     } catch (error) {
-      setErrorMessage(error.response.data.message);
-      setLoading(false);
+      dispatch(signInFailure(error.response.data.message));
     }
   };
 
@@ -93,7 +103,7 @@ const SignIn = () => {
                           <span className="pl-3">Loading...</span>
                         </>
                       ) : (
-                        "Sign Up"
+                        "Sign In"
                       )}
                     </span>
                   </Button>
