@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch,useSelector } from "react-redux";
 import { signInStart, signInSuccess, signInFailure } from "../redux/user/userSlice";
+import OAuth from "../components/OAuth";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({});
@@ -12,7 +13,7 @@ const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const  {loading, error:errorMessage} = useSelector((state)=>state.user);
-  
+
   // input on change
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -119,6 +120,8 @@ const SignUp = () => {
                       </span>
                     )}
                   </div>
+                  {/* create account with google and loggin */}
+                  <OAuth/>
                   <p className="mt-6 text-sm text-gray-600 text-center">
                     Already have an account?{" "}
                     <Link to="/sign-in" className="text-blue-500">
