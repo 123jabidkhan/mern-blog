@@ -40,7 +40,7 @@ const SignIn = () => {
 
       // if response ok
       if (res.statusText) {
-        dispatch(signInSuccess(res.data.message));
+        dispatch(signInSuccess(res.data));
         navigate("/");
       }
       console.log(res.data);
