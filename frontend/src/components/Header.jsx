@@ -1,10 +1,14 @@
-import { Button, TextInput, Navbar } from "flowbite-react";
+import { Button, TextInput, Navbar, Avatar } from "flowbite-react";
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaSun } from "react-icons/fa";
+import { Dropdown } from "flowbite-react";
+import {HiOutlineUserCircle , HiLogout, HiViewGrid } from "react-icons/hi";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const path = useLocation().pathname;
+  const { currentUser } = useSelector((state) => state.user);
 
   return (
     <Navbar className="border-b-2">
@@ -13,9 +17,9 @@ const Header = () => {
         className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white"
       >
         <span className="px-2 py-1 bg-gradient-to-r from-pink-500  to-orange-500 rounded-lg text-white">
-          Jabid`s
+        Blog &nbsp;&nbsp;&nbsp;&nbsp;
         </span>
-        Blog
+        Hub
       </Link>
       <form>
         <TextInput
@@ -33,22 +37,46 @@ const Header = () => {
         <Button className="w-12 h-10 hidden sm:inline" color="gray" pill>
           <FaSun />
         </Button>
-        <Link to="/sign-in">
-          <Button gradientDuoTone="pinkToOrange" outline>
-            Sign In
-          </Button>
-        </Link>
+        {currentUser ? (
+          <Dropdown arrowIcon={false}
+            inline
+            label={
+              <Avatar alt='user' img={currentUser.profilePicture} rounded />
+            }>
+      <Dropdown.Header >
+        <span className="block text-sm">{currentUser.username}</span>
+        <span className="block truncate text-sm font-medium">{currentUser.email}</span>
+      </Dropdown.Header>
+      <Dropdown.Item icon={HiViewGrid}>Dashboard</Dropdown.Item>
+      <Dropdown.Item icon={HiOutlineUserCircle}>Profile</Dropdown.Item>
+      <Dropdown.Divider />
+      <Dropdown.Item icon={HiLogout}>Sign out</Dropdown.Item>
+    </Dropdown>
+        ) : (
+          <Link to="/sign-in">
+            <Button gradientDuoTone="pinkToOrange" outline>
+              Sign In
+            </Button>
+          </Link>
+        )}
+
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>
-        <Navbar.Link active={path === "/"} as={"div"} >
-          <Link to="/" className="hover:text-pink-500">Home</Link>
+        <Navbar.Link active={path === "/"} as={"div"}>
+          <Link to="/" className="hover:text-pink-500">
+            Home
+          </Link>
         </Navbar.Link>
         <Navbar.Link active={path === "/about"} as={"div"}>
-          <Link to="/about" className="hover:text-pink-500">About</Link>
+          <Link to="/about" className="hover:text-pink-500">
+            About
+          </Link>
         </Navbar.Link>
         <Navbar.Link active={path === "/projects"} as={"div"}>
-          <Link to="/projects" className="hover:text-pink-500">Projects</Link>
+          <Link to="/projects" className="hover:text-pink-500">
+            Projects
+          </Link>
         </Navbar.Link>
       </Navbar.Collapse>
     </Navbar>

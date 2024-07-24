@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
   profilePicture: {
     type: String,
     default:
-      'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
+      'https://i.pinimg.com/736x/64/c0/7c/64c07cd56fee2c3b0423168c5b10e58c.jpg',
   },
 },
 { timestamps: true });
