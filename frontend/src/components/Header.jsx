@@ -4,12 +4,14 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { FaSun } from "react-icons/fa";
 import { Dropdown } from "flowbite-react";
 import {HiOutlineUserCircle , HiLogout, HiViewGrid } from "react-icons/hi";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleTheme } from '../redux/theme/themeSlice';
 
 const Header = () => {
   const path = useLocation().pathname;
   const { currentUser } = useSelector((state) => state.user);
-
+  // const { theme } = useSelector((state) => state.theme);
+  const dispatch = useDispatch();
   return (
     <Navbar className="border-b-2">
       <Link
@@ -34,7 +36,7 @@ const Header = () => {
       </Button>
 
       <div className="flex gap-2 md:order-2">
-        <Button className="w-12 h-10 hidden sm:inline" color="gray" pill>
+        <Button className="w-12 h-10 hidden sm:inline" color="gray" pill  onClick={() => dispatch(toggleTheme())}>
           <FaSun />
         </Button>
         {currentUser ? (
