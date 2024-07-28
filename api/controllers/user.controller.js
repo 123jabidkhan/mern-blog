@@ -1,3 +1,7 @@
+import {User} from '../models/user.model.js';
+import { errorHandler } from '../utils/error.js';
+import bcrypt from 'bcrypt';
+
 const test = (req, res)=>{
     return res.json({message:"User data from the server!"})
 }
@@ -10,7 +14,7 @@ const test = (req, res)=>{
       if (req.body.password.length < 6) {
         return next(errorHandler(400, 'Password must be at least 6 characters'));
       }
-      req.body.password = bcryptjs.hashSync(req.body.password, 10);
+      req.body.password =  await bcrypt.hash(req.body.password, 10);
     }
     if (req.body.username) {
       if (req.body.username.length < 7 || req.body.username.length > 20) {
@@ -31,7 +35,7 @@ const test = (req, res)=>{
       }
     }
     try {
-      const updatedUser = await User.findByIdAndUpdate(
+      const userUpdate = await User.findByIdAndUpdate(
         req.params.userId,
         {
           $set: {
@@ -43,11 +47,34 @@ const test = (req, res)=>{
         },
         { new: true }
       );
-      const { password, ...rest } = updatedUser._doc;
+      const { password, ...rest } = userUpdate._doc;
       res.status(200).json(rest);
     } catch (error) {
       next(error);
     }
   };
 
-export {test, updateUser};
+   const signout = (req, res, next) => {
+    try {
+      res
+        .clearCookie('access_token')
+        .status(200)
+        .json('User has been signed out');
+    } catch (error) {
+      next(error);
+    } 
+  };
+  
+  const deleteUser = async (req, res, next) => {
+    if (!req.user.isAdmin && req.user.id !== req.params.userId) {
+      return next(errorHandler(403, 'You are not allowed to delete this user'));
+    }
+    try {
+      await User.findByIdAndDelete(req.params.userId);
+      res.status(200).json('User has been deleted');
+    } catch (error) {
+      next(error);
+    }
+  };
+
+export {test, updateUser, signout, deleteUser};

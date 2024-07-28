@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import userRouter from './routes/user.route.js';
 import authRoutes from './routes/auth.route.js';
+import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -24,12 +25,10 @@ app.listen(PORT,(req, res)=>{
 
 // middlewares
 app.use(express.json());
-
+app.use(cookieParser());
 // routes
 app.use('/api/user',userRouter);
 app.use('/api/auth', authRoutes);
-
-
 
 // middleware for internal errors handling
 app.use((err, req, res, next)=>{
