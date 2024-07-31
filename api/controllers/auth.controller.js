@@ -49,7 +49,7 @@ const signIn = async (req, res, next) =>{
         }
         
         // generate token
-        const token = jwt.sign({id:validUser._id}, process.env.JWT_SECRET_KEY);
+        const token = jwt.sign({id:validUser._id, isAdmin:validUser.isAdmin}, process.env.JWT_SECRET_KEY);
 
         // get user without password
         const {password:pass, ...rest} = validUser._doc;
@@ -95,7 +95,7 @@ const signIn = async (req, res, next) =>{
       });
       await newUser.save();
       const token = jwt.sign(
-        { id: newUser._id},
+        { id: newUser._id, isAdmin:newUser.isAdmin},
         process.env.JWT_SECRET_KEY
       );
       const { password, ...rest } = newUser._doc;
