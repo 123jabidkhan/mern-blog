@@ -1,4 +1,6 @@
-import { Sidebar } from 'flowbite-react';
+import React, { useState, useEffect } from "react";
+import { HiMenuAlt3 } from "react-icons/hi";
+import { Link, useLocation } from "react-router-dom";
 import {
   HiUser,
   HiArrowSmRight,
@@ -6,29 +8,65 @@ import {
   HiOutlineUserGroup,
   HiAnnotation,
   HiChartPie,
-} from 'react-icons/hi';
-import { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+} from "react-icons/hi";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import {signoutSuccess} from '../redux/user/userSlice';
-import { useDispatch } from 'react-redux';
 
 const DashSidebar = () => {
   const location = useLocation();
   const dispatch = useDispatch();
+  const [tab, setTab] = useState("");
+  const [open, setOpen] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
-  const [tab, setTab] = useState('');
+
+  const menus = [
+    {
+      name: currentUser?.isAdmin ? "dashboard" : null,
+      link: "/dashboard?tab=dash",
+      icon: HiChartPie,
+      activeLink: "dash",
+    },
+    {
+      name: "profile",
+      link: "/dashboard?tab=profile",
+      icon: HiUser,
+      activeLink: "profile",
+    },
+    {
+      name: "posts",
+      link: "/dashboard?tab=posts",
+      icon: HiDocumentText,
+      activeLink: "posts",
+    },
+    {
+      name: currentUser?.isAdmin ? "users" : null,
+      link: "/dashboard?tab=users",
+      icon: HiOutlineUserGroup,
+      activeLink: "users",
+    },
+    {
+      name: currentUser.isAdmin ? "comments" : null,
+      link: "/dashboard?tab=comments",
+      icon: HiAnnotation,
+      activeLink: "comments",
+    },
+  ];
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
-    const tabFromUrl = urlParams.get('tab');
+    const tabFromUrl = urlParams.get("tab");
+    console.log(`currentUser >>`, currentUser);
+
     if (tabFromUrl) {
       setTab(tabFromUrl);
     }
   }, [location.search]);
+
   const handleSignout = async () => {
+
     try {
-      const res = await fetch('/api/user/signout', {
-        method: 'POST',
+      const res = await fetch("/api/user/signout", {
+        method: "POST",
       });
       const data = await res.json();
       if (!res.ok) {
@@ -40,77 +78,91 @@ const DashSidebar = () => {
       console.log(error.message);
     }
   };
-  
   return (
-    <Sidebar className='w-full md:w-56'>
-      <Sidebar.Items>
-        <Sidebar.ItemGroup className='flex flex-col gap-1'>
-          {currentUser && currentUser.isAdmin && (
-            <Link to='/dashboard?tab=dash'>
-              <Sidebar.Item
-                active={tab === 'dash' || !tab}
-                icon={HiChartPie}
-                as='div'
+    <section className="flex gap-6">
+      <div
+        className={`bg-dark min-h-screen border-r-2 border-red-100 border-line ${
+          open ? "w-60" : "w-16"
+        } duration-500 text-gray-500 dark:text-white px-4 `}
+      >
+        <div className="py-3 flex justify-end">
+          <HiMenuAlt3
+            size={26}
+            className="cursor-pointer"
+            onClick={() => setOpen(!open)}
+          />
+          {/* for admin */}
+        </div>
+        <div className="mt-4 flex flex-col gap-4 relative">
+          {menus
+            ?.filter((navLink) => navLink?.name)
+            ?.map((menu, i) => (
+              <Link
+                to={menu?.link}
+                key={i}
+                className={` ${tab === menu?.activeLink ? `bg-gray-800` : ""} ${
+                  menu?.margin && "mt-5"
+                }   group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-gray-800 rounded-md`}
               >
-                Dashboard
-              </Sidebar.Item>
-            </Link>
-          )}
-          <Link to='/dashboard?tab=profile'>
-            <Sidebar.Item
-              active={tab === 'profile'}
-              icon={HiUser}
-              label={currentUser.isAdmin ? 'Admin' : 'User'}
-              labelColor='dark'
-              as='div'
-            >
-              Profile
-            </Sidebar.Item>
-          </Link>
-          {currentUser.isAdmin && (
-            <Link to='/dashboard?tab=posts'>
-              <Sidebar.Item
-                active={tab === 'posts'}
-                icon={HiDocumentText}
-                as='div'
-              >
-                Posts
-              </Sidebar.Item>
-            </Link>
-          )}
-          {currentUser.isAdmin && (
-            <>
-              <Link to='/dashboard?tab=users'>
-                <Sidebar.Item
-                  active={tab === 'users'}
-                  icon={HiOutlineUserGroup}
-                  as='div'
+                <div>{React.createElement(menu?.icon, { size: "20" })}</div>
+                <h2
+                  style={{
+                    transitionDelay: `${i + 3}00ms`,
+                  }}
+                  className={`whitespace-pre duration-500 ${
+                    !open && "opacity-0 translate-x-28 overflow-hidden"
+                  }`}
                 >
-                  Users
-                </Sidebar.Item>
-              </Link>
-              <Link to='/dashboard?tab=comments'>
-                <Sidebar.Item
-                  active={tab === 'comments'}
-                  icon={HiAnnotation}
-                  as='div'
+                  {menu?.name}
+                </h2>
+                <h2
+                  className={`${
+                    open && "hidden"
+                  } absolute left-48 bg-white font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit  `}
                 >
-                  Comments
-                </Sidebar.Item>
+                  {menu?.name}
+                </h2>
               </Link>
-            </>
-          )}
-          <Sidebar.Item
-            icon={HiArrowSmRight}
-            className='cursor-pointer'
-            onClick={handleSignout}
-          >
-            Sign Out
-          </Sidebar.Item>
-        </Sidebar.ItemGroup>
-      </Sidebar.Items>
-    </Sidebar>
-  );
-}
+            ))}
 
-export default DashSidebar
+          <Link 
+            className={` "mt-5" group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-gray-800 rounded-md`}
+            onClick={()=>handleSignout()}
+
+          >
+            <div>
+              {React.createElement(
+                'button',
+                null,
+                React.createElement(HiArrowSmRight, { size: 20, color: "#eb4ba8e3" })
+              )}
+            </div>
+            <h2
+              style={{
+                transitionDelay: `${5 + 3}00ms`,
+              }}
+              className={`whitespace-pre duration-500 ${
+                !open && "opacity-0 translate-x-28 overflow-hidden"
+              }`}
+            >
+              Sign Out
+            </h2>
+            <h2
+              className={`${
+                open && "hidden"
+              } absolute left-48 bg-white font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit  `}
+              
+            >
+              Sign Out
+            </h2>
+          </Link>
+        </div>
+      </div>
+      {/* <div className="m-3 text-xl text-light-900 font-semibold">
+        REACT TAILWIND
+      </div> */}
+    </section>
+  );
+};
+
+export default DashSidebar;

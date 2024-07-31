@@ -63,11 +63,12 @@ const Header = () => {
         </Button>
         {currentUser ? (
           <Dropdown
-            arrowIcon={false}
+            arrowIcon={true}
             inline
             label={
               <Avatar alt="user" img={currentUser.profilePicture} rounded />
             }
+            
           >
             <Dropdown.Header>
               <span className="block text-sm">{currentUser.username}</span>
@@ -79,6 +80,17 @@ const Header = () => {
               <Dropdown.Item>Profile</Dropdown.Item>
             </Link>
             <Dropdown.Divider />
+
+          
+            <Link  to="/" className="hover:text-pink-500 lg:hidden md:hidden">
+            <Dropdown.Item>Home</Dropdown.Item>
+          </Link>
+          <Link  to="/about" className="hover:text-pink-500 lg:hidden md:hidden">
+            <Dropdown.Item>About</Dropdown.Item>
+          </Link>
+          <Link  to="/projects" className="hover:text-pink-500 lg:hidden md:hidden">
+            <Dropdown.Item>Projects</Dropdown.Item>
+          </Link>
             
             <Dropdown.Item icon={HiLogout} onClick={handleSignout}>Sign out</Dropdown.Item>
           </Dropdown>
@@ -90,7 +102,7 @@ const Header = () => {
           </Link>
         )}
 
-        <Navbar.Toggle />
+        {/* <Navbar.Toggle /> */}
       </div>
       <Navbar.Collapse>
         <Navbar.Link active={path === "/"} as={"div"}>
@@ -108,7 +120,7 @@ const Header = () => {
             Projects
           </Link>
         </Navbar.Link>
-      </Navbar.Collapse>
+      </Navbar.Collapse> 
     </Navbar>
   );
 };
