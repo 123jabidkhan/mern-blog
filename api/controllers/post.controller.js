@@ -69,5 +69,9 @@ const createPost = async (req, res, next) => {
     next(error)
    }
   }
+  
+  const deletePost = async (req, res, next)=>{
+    console.log(req.user.isAdmin, req.user);
+  }
 
-export {createPost,getPosts};
+export {createPost, getPosts, deletePost};
