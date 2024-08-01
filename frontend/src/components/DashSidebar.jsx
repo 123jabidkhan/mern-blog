@@ -7,8 +7,9 @@ import {
   HiDocumentText,
   HiOutlineUserGroup,
   HiAnnotation,
-  HiChartPie,
+  HiChartPie
 } from "react-icons/hi";
+import { RxCross2 } from "react-icons/rx";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import {signoutSuccess} from '../redux/user/userSlice';
@@ -88,8 +89,13 @@ const DashSidebar = () => {
         <div className="py-3 flex justify-end">
           <HiMenuAlt3
             size={26}
-            className="cursor-pointer"
             onClick={() => setOpen(!open)}
+            className={`cursor-pointer ${open && 'hidden'}`}
+          />
+          <RxCross2 
+            size={26}
+            onClick={() => setOpen(!open)}
+            className={`cursor-pointer ${!open && 'hidden'}`}
           />
           {/* for admin */}
         </div>
@@ -116,7 +122,7 @@ const DashSidebar = () => {
                   {menu?.name}
                 </h2>
                 <h2
-                  className={`${
+                  className={` z-10 ${
                     open && "hidden"
                   } absolute left-48 bg-white font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit  `}
                 >
@@ -148,7 +154,7 @@ const DashSidebar = () => {
               Sign Out
             </h2>
             <h2
-              className={`${
+              className={`z-10 ${
                 open && "hidden"
               } absolute left-48 bg-white font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit  `}
               
