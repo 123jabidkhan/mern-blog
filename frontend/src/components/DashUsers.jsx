@@ -2,25 +2,29 @@ import { Modal, Table, Button, Checkbox } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { HiOutlineExclamationCircle, HiOutlineTrash, HiPlus} from "react-icons/hi";
+import {
+  HiOutlineExclamationCircle,
+  HiOutlineTrash,
+  HiCheck,
+  HiOutlineX
+} from "react-icons/hi";
 // import { set } from 'mongoose';
 
-const DashPosts = () => {
+const DashUsers = () => {
   const { currentUser } = useSelector((state) => state.user);
-  const [userPosts, setUserPosts] = useState([]);
+  const [users, setUsers] = useState([]);
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  // const [postIdToDelete, setPostIdToDelete] = useState("");
   const [selectedRows, setSelectedRows] = useState([]);
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchUsers = async () => {
       try {
-        const res = await fetch(`/api/post/getposts?userId=${currentUser._id}`);
+        const res = await fetch(`/api/user/getusers`);
         const data = await res.json();
         if (res.ok) {
-          setUserPosts(data.posts);
-          if (data.posts.length < 9) {
+          setUsers(data.users);
+          if (data.users.length < 9) {
             setShowMore(false);
           }
         }
@@ -29,7 +33,7 @@ const DashPosts = () => {
       }
     };
     if (currentUser.isAdmin) {
-      fetchPosts();
+      fetchUsers();
     }
   }, [currentUser._id]);
 
@@ -45,7 +49,7 @@ const DashPosts = () => {
   // all rows selected
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelectedRows = userPosts.map((row) => row._id);
+      const newSelectedRows = users.map((row) => row._id);
       setSelectedRows(newSelectedRows);
       return;
     }
@@ -53,33 +57,33 @@ const DashPosts = () => {
   };
 
   // Delete posts byIDS
-  const handleDeletePost = async () => {
-    setShowModal(false);
-    try{
-      const res = await fetch(`/api/post/deletepost/`, {
-        method: "DELETE",
-        headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ ids: selectedRows }),
-      });
-      const data = await res.json();
-      if(!res.ok){
-        console.log(data.message);
-      }else{
-        setUserPosts((prev) =>
-          prev.filter((post) => !selectedRows.includes(post._id)));
-        setSelectedRows([])
-      }
-    }
-    catch(error){
-      console.log(error.message);
-    }
-    
-  };
+  //   const handleDeletePost = async () => {
+  //     setShowModal(false);
+  //     try{
+  //       const res = await fetch(`/api/post/deletepost/`, {
+  //         method: "DELETE",
+  //         headers: {
+  //               'Content-Type': 'application/json',
+  //             },
+  //             body: JSON.stringify({ ids: selectedRows }),
+  //       });
+  //       const data = await res.json();
+  //       if(!res.ok){
+  //         console.log(data.message);
+  //       }else{
+  //         setUsers((prev) =>
+  //           prev.filter((post) => !selectedRows.includes(post._id)));
+  //         setSelectedRows([])
+  //       }
+  //     }
+  //     catch(error){
+  //       console.log(error.message);
+  //     }
+
+  //   };
   return (
     <div className="w-full table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
-      {currentUser.isAdmin && userPosts.length > 0 ? (
+      {currentUser.isAdmin && users.length > 0 ? (
         <>
           <div className="p-4 flex justify-between ">
             {selectedRows && selectedRows?.length > 0 ? (
@@ -90,48 +94,50 @@ const DashPosts = () => {
                     {selectedRows.length === 1 ? "post" : "posts"} marked for
                     deletion &nbsp;
                   </span>
-                    <HiOutlineTrash className="w-6 h-6 text-pink-600 transition-transform duration-200 ease-in-out hover:scale-125 mt-2" size='23' onClick={() => {
+                  <HiOutlineTrash
+                    className="w-6 h-6 text-pink-600 transition-transform duration-200 ease-in-out hover:scale-125 mt-2"
+                    size="23"
+                    onClick={() => {
                       setShowModal(true);
-                    }}  />
+                    }}
+                  />
                 </div>
               </>
             ) : (
               <span className="text-xl text-pink-500">
-                All Posts : ( {userPosts.length} )
+                All Users : ( {users.length} )
               </span>
             )}
-<Link to={'/create-post'}>
-            <Button gradientMonochrome="pink" size='md'><HiPlus size='22'/>&nbsp;  Publish Post</Button>
-</Link>
+           
           </div>
           <Table hoverable className="shadow-xl">
             <Table.Head>
-              <Table.HeadCell className="p-4">
+              <Table.HeadCell className="p-2">
                 <Checkbox
                   checked={
-                    selectedRows.length === userPosts.length &&
+                    selectedRows.length === users.length &&
                     selectedRows.length > 0
                   }
                   className="text-pink-600 focus:ring-pink-500"
                   onChange={handleSelectAllClick}
                   indeterminate={
                     selectedRows.length > 0 &&
-                    selectedRows.length < userPosts.length
+                    selectedRows.length < users.length
                   }
                 />
               </Table.HeadCell>
-              <Table.HeadCell>Date updated</Table.HeadCell>
-              <Table.HeadCell>Post image</Table.HeadCell>
-              <Table.HeadCell>Post title</Table.HeadCell>
-              <Table.HeadCell>Category</Table.HeadCell>
+              <Table.HeadCell> Created At </Table.HeadCell>
+              <Table.HeadCell>  Profile Image</Table.HeadCell>
+              <Table.HeadCell> Username</Table.HeadCell>
+              <Table.HeadCell> Admin </Table.HeadCell>
               <Table.HeadCell>
-                <span>Edit</span>
+                <span>Delete</span>
               </Table.HeadCell>
             </Table.Head>
-            {userPosts.map((row, i) => (
-              <Table.Body className="divide-y" key={i}>
-                <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                  <Table.Cell className="p-4">
+            {users.map((row) => (
+              <Table.Body className="divide-y" key={row._id}>
+                <Table.Row className="bg-white dark:border-gray-100 dark:bg-gray-800">
+                  <Table.Cell className="p-3">
                     <Checkbox
                       checked={selectedRows.includes(row._id)}
                       onChange={() => handleSelectRow(row._id)}
@@ -139,26 +145,27 @@ const DashPosts = () => {
                     />
                   </Table.Cell>
                   <Table.Cell>
-                    {new Date(row.updatedAt).toLocaleDateString()}
+                    {new Date(row.createdAt).toLocaleDateString()}
                   </Table.Cell>
                   <Table.Cell>
                     <Link to={`/post/${row.slug}`}>
                       <img
-                        src={row.image}
-                        alt={row.title}
-                        className="w-20 h-10 object-cover bg-gray-500"
+                        src={row.profilePicture}
+                        alt={row.username}
+                        className="w-10 h-10 object-cover bg-gray-500 rounded-full"
                       />
                     </Link>
                   </Table.Cell>
                   <Table.Cell>
                     <Link
                       className="font-medium text-gray-900 dark:text-white"
-                      to={`/post/${row.slug}`}
                     >
-                      {row.title}
+                      {row.username}
                     </Link>
                   </Table.Cell>
-                  <Table.Cell>{row.category}</Table.Cell>
+                  <Table.Cell>
+                  {row.isAdmin ? <HiCheck className='text-green-500' size='25' /> : <HiOutlineX className='text-red-500' size='25'  />}
+                  </Table.Cell>
                   <Table.Cell>
                     <Link to={`/update-post/${row._id}`}>
                       <Button
@@ -181,19 +188,13 @@ const DashPosts = () => {
           )}
         </>
       ) : (
-        <div className="flex gap-5">
         <p className="text-xl">You have no posts yet!</p>
-        <Link to={'/create-post'}>
-            <Button gradientMonochrome="pink" size='xs'><HiPlus size='20'/>&nbsp;  Publish Post</Button>
-</Link>
-        </div>
       )}
       <Modal
         show={showModal}
         onClose={() => setShowModal(false)}
         popup
         size="sm"
-        
       >
         <Modal.Header />
         <Modal.Body>
@@ -203,7 +204,7 @@ const DashPosts = () => {
               Are you sure you want to delete this post?
             </h3>
             <div className="flex justify-center gap-4">
-              <Button gradientMonochrome="failure" onClick={handleDeletePost}>
+              <Button gradientMonochrome="failure" >
                 Yes, I`m sure
               </Button>
               <Button color="gray" onClick={() => setShowModal(false)}>
@@ -217,4 +218,4 @@ const DashPosts = () => {
   );
 };
 
-export default DashPosts;
+export default DashUsers;
