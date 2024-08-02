@@ -63,19 +63,26 @@ import bcrypt from 'bcrypt';
     } 
   };
   
-  // user delete by ID
-  const deleteUser = async (req, res, next) => {
+  // user delete by IDs
+  const deleteUsers = async (req, res, next) => {
+    const { ids } = req.body;
     if (!req.user.isAdmin && req.user.id !== req.params.userId) {
       return next(errorHandler(403, 'You are not allowed to delete this user'));
     }
+    if (!Array.isArray(ids)) {
+      return res.status(400).json({ error: 'Invalid data format. ids should be an array.' });
+    }
     try {
-      await User.findByIdAndDelete(req.params.userId);
-      res.status(200).json('User has been deleted');
+      await User.deleteMany({ _id: { $in: ids } });
+      res.status(200).json({ message: 'Users deleted successfully' });
     } catch (error) {
+      console.error('Error deleting users:', error);
+      // res.status(500).json({ error: 'Failed to delete users' });
       next(error);
     }
   };
 
+  // get all users
   const getUsers = async (req, res, next)=>{
     if (!req.user.isAdmin && req.user.id !== req.params.userId) {
       return next(errorHandler(403, 'You are not allowed to delete this user'));
@@ -121,4 +128,4 @@ import bcrypt from 'bcrypt';
     }
   }
 
-export {updateUser, signout, deleteUser, getUsers};
+export {updateUser, signout, deleteUsers, getUsers};

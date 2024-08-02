@@ -56,31 +56,47 @@ const DashUsers = () => {
     setSelectedRows([]);
   };
 
-  // Delete posts byIDS
-  //   const handleDeletePost = async () => {
-  //     setShowModal(false);
-  //     try{
-  //       const res = await fetch(`/api/post/deletepost/`, {
-  //         method: "DELETE",
-  //         headers: {
-  //               'Content-Type': 'application/json',
-  //             },
-  //             body: JSON.stringify({ ids: selectedRows }),
-  //       });
-  //       const data = await res.json();
-  //       if(!res.ok){
-  //         console.log(data.message);
-  //       }else{
-  //         setUsers((prev) =>
-  //           prev.filter((post) => !selectedRows.includes(post._id)));
-  //         setSelectedRows([])
-  //       }
-  //     }
-  //     catch(error){
-  //       console.log(error.message);
-  //     }
+//   Delete posts byIDS
+    const handleDeletePost = async () => {
+      setShowModal(false);
+      try{
+        const res = await fetch(`/api/user/deleteUsers/`, {
+          method: "DELETE",
+          headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ ids: selectedRows }),
+        });
+        const data = await res.json();
+        if(!res.ok){
+          console.log(data.message);
+        }else{
+          setUsers((prev) =>
+            prev.filter((post) => !selectedRows.includes(post._id)));
+          setSelectedRows([])
+        }
+      }
+      catch(error){
+        console.log(error.message);
+      }
 
-  //   };
+    };
+
+    const handleShowMore = async () => {
+        const startIndex = users.length;
+        try {
+          const res = await fetch(`/api/user/getusers?startIndex=${startIndex}`);
+          const data = await res.json();
+          if (res.ok) {
+            setUsers((prev) => [...prev, ...data.users]);
+            if (data.users.length < 9) {
+              setShowMore(false);
+            }
+          }
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
   return (
     <div className="w-full table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
       {currentUser.isAdmin && users.length > 0 ? (
@@ -110,7 +126,7 @@ const DashUsers = () => {
             )}
            
           </div>
-          <Table hoverable className="shadow-xl">
+          <Table hoverable className="shadow-xl h-['100vh']">
             <Table.Head>
               <Table.HeadCell className="p-2">
                 <Checkbox
@@ -129,10 +145,8 @@ const DashUsers = () => {
               <Table.HeadCell> Created At </Table.HeadCell>
               <Table.HeadCell>  Profile Image</Table.HeadCell>
               <Table.HeadCell> Username</Table.HeadCell>
+              <Table.HeadCell> Email Id</Table.HeadCell>
               <Table.HeadCell> Admin </Table.HeadCell>
-              <Table.HeadCell>
-                <span>Delete</span>
-              </Table.HeadCell>
             </Table.Head>
             {users.map((row) => (
               <Table.Body className="divide-y" key={row._id}>
@@ -148,41 +162,32 @@ const DashUsers = () => {
                     {new Date(row.createdAt).toLocaleDateString()}
                   </Table.Cell>
                   <Table.Cell>
-                    <Link to={`/post/${row.slug}`}>
                       <img
                         src={row.profilePicture}
                         alt={row.username}
                         className="w-10 h-10 object-cover bg-gray-500 rounded-full"
                       />
-                    </Link>
                   </Table.Cell>
-                  <Table.Cell>
-                    <Link
-                      className="font-medium text-gray-900 dark:text-white"
-                    >
+                  <Table.Cell className="font-medium text-gray-900 dark:text-white">
                       {row.username}
-                    </Link>
+                  </Table.Cell>
+                  <Table.Cell className="font-medium text-gray-900 dark:text-white">
+                    {/* <Link
+                      className="font-medium text-gray-900 dark:text-white"
+                    > */}
+                      {row.email}
+                    {/* </Link> */}
                   </Table.Cell>
                   <Table.Cell>
                   {row.isAdmin ? <HiCheck className='text-green-500' size='25' /> : <HiOutlineX className='text-red-500' size='25'  />}
                   </Table.Cell>
-                  <Table.Cell>
-                    <Link to={`/update-post/${row._id}`}>
-                      <Button
-                        className="rounded"
-                        size="xs"
-                        gradientMonochrome="pink"
-                      >
-                        Edit
-                      </Button>
-                    </Link>
-                  </Table.Cell>
+                 
                 </Table.Row>
               </Table.Body>
             ))}
           </Table>
           {showMore && (
-            <button className="w-full text-teal-500 self-center text-sm py-7">
+            <button onClick={handleShowMore} className="w-full text-pink-500 self-center text-sm py-7">
               Show more
             </button>
           )}
@@ -204,7 +209,7 @@ const DashUsers = () => {
               Are you sure you want to delete this post?
             </h3>
             <div className="flex justify-center gap-4">
-              <Button gradientMonochrome="failure" >
+              <Button gradientMonochrome="failure" onClick={handleDeletePost}>
                 Yes, I`m sure
               </Button>
               <Button color="gray" onClick={() => setShowModal(false)}>
