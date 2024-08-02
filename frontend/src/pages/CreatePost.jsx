@@ -162,9 +162,12 @@ const CreatePost = () => {
             setFormData({ ...formData, content: value });
           }}
         />
-        <Button type="submit" gradientDuoTone="pinkToOrange">
+        <Button type="submit" className="mt-2" gradientDuoTone="pinkToOrange">
           Publish
         </Button>
+        {/* <Link to={'/dashboard?tab=posts'} className="w-50" > */}
+          <Button onClick={()=>navigate('/dashboard?tab=posts')} outline gradientDuoTone="pinkToOrange">Show All Posts</Button>
+        {/* </Link> */}
         {publishError && (
           <Alert className="mt-5" color="failure">
             {publishError}

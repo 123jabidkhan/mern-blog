@@ -2,7 +2,7 @@ import { Modal, Table, Button, Checkbox } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { HiOutlineExclamationCircle, HiOutlineTrash } from "react-icons/hi";
+import { HiOutlineExclamationCircle, HiOutlineTrash, HiPlus} from "react-icons/hi";
 // import { set } from 'mongoose';
 
 const DashPosts = () => {
@@ -81,7 +81,7 @@ const DashPosts = () => {
     <div className="w-full table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
       {currentUser.isAdmin && userPosts.length > 0 ? (
         <>
-          <div className="p-4">
+          <div className="p-4 flex justify-between ">
             {selectedRows && selectedRows?.length > 0 ? (
               <>
                 <div className="display flex justify-content-center">
@@ -100,6 +100,9 @@ const DashPosts = () => {
                 All Posts : ( {userPosts.length} )
               </span>
             )}
+<Link to={'/create-post'}>
+            <Button gradientMonochrome="pink" size='md'><HiPlus size='22'/>&nbsp;  Publish Post</Button>
+</Link>
           </div>
           <Table hoverable className="shadow-xl">
             <Table.Head>
