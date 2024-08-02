@@ -119,8 +119,16 @@ export default function UpdatePost() {
             required
             id='title'
             className='flex-1'
+            onChange={(e) =>
+              setFormData({ ...formData, title: e.target.value })
+            }
+            value={formData.title}
           />
-          <Select 
+          <Select
+            onChange={(e) =>
+              setFormData({ ...formData, category: e.target.value })
+            }
+            value={formData.category}
           >
             <option value='uncategorized'>Select a category</option>
             <option value='javascript'>JavaScript</option>
@@ -145,7 +153,7 @@ export default function UpdatePost() {
             {imageUploadProgress ? (
               <div className='w-16 h-16'>
                 <CircularProgressbar
-                 
+                  value={imageUploadProgress}
                   text={`${imageUploadProgress || 0}%`}
                 />
               </div>
@@ -155,13 +163,22 @@ export default function UpdatePost() {
           </Button>
         </div>
         {imageUploadError && <Alert color='failure'>{imageUploadError}</Alert>}
-       
+        {formData.image && (
+          <img
+            src={formData.image}
+            alt='upload'
+            className='w-full h-72 object-cover'
+          />
+        )}
         <ReactQuill
           theme='snow'
+          value={formData.content}
           placeholder='Write something...'
-          className="h-40 mb-12"
+          className='h-40 mb-12'
           required
-        
+          onChange={(value) => {
+            setFormData({ ...formData, content: value });
+          }}
         />
         <Button type='submit' gradientDuoTone='pinkToOrange'>
           Update post
