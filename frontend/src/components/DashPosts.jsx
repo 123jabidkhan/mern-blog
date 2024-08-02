@@ -2,10 +2,7 @@ import { Modal, Table, Button, Checkbox } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  HiOutlineExclamationCircle,
-  HiOutlineTrash ,
-} from "react-icons/hi";
+import { HiOutlineExclamationCircle, HiOutlineTrash } from "react-icons/hi";
 // import { set } from 'mongoose';
 
 const DashPosts = () => {
@@ -13,7 +10,7 @@ const DashPosts = () => {
   const [userPosts, setUserPosts] = useState([]);
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [postIdToDelete, setPostIdToDelete] = useState("");
+  // const [postIdToDelete, setPostIdToDelete] = useState("");
   const [selectedRows, setSelectedRows] = useState([]);
 
   useEffect(() => {
@@ -50,47 +47,61 @@ const DashPosts = () => {
     if (event.target.checked) {
       const newSelectedRows = userPosts.map((row) => row._id);
       setSelectedRows(newSelectedRows);
-      console.log(
-        selectedRows.length === userPosts.length && selectedRows.length > 0
-      );
       return;
     }
     setSelectedRows([]);
   };
-  const handleDeletePost =()=>{
-    console.log('Deleted!');
+
+  // Delete posts byIDS
+  const handleDeletePost = async () => {
     setShowModal(false);
-  }
+    try{
+      const res = await fetch(`/api/post/deletepost/`, {
+        method: "DELETE",
+        headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ ids: selectedRows }),
+      });
+      const data = await res.json();
+      if(!res.ok){
+        console.log(data.message);
+      }else{
+        setUserPosts((prev) =>
+          prev.filter((post) => !selectedRows.includes(post._id)));
+        setSelectedRows([])
+      }
+    }
+    catch(error){
+      console.log(error.message);
+    }
+    
+  };
   return (
     <div className="w-full table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
       {currentUser.isAdmin && userPosts.length > 0 ? (
         <>
           <div className="p-4">
-            {selectedRows.length > 0 ? (
+            {selectedRows && selectedRows?.length > 0 ? (
               <>
                 <div className="display flex justify-content-center">
                   <span className="text-xl py-1">
-                    {selectedRows.length} Posts Selected To Delete &nbsp;
+                    {selectedRows.length}{" "}
+                    {selectedRows.length === 1 ? "post" : "posts"} marked for
+                    deletion &nbsp;
                   </span>
-                  <Button
-                    onClick={() => {
+                    <HiOutlineTrash className="w-6 h-6 text-pink-600 transition-transform duration-200 ease-in-out hover:scale-125 mt-2" size='23' onClick={() => {
                       setShowModal(true);
-                      setPostIdToDelete(`row._id`);
-                    }}
-                    size='xs'
-                    outline
-                    pill
-                    gradientMonochrome="failure"
-                  >
-                    <HiOutlineTrash  className="h-6 w-6" />
-                  </Button>
+                    }}  />
                 </div>
               </>
             ) : (
-              <span className="text-xl text-pink-500">All Posts : ({userPosts.length})</span>
+              <span className="text-xl text-pink-500">
+                All Posts : ( {userPosts.length} )
+              </span>
             )}
           </div>
-          <Table hoverable className="shadow-md">
+          <Table hoverable className="shadow-xl">
             <Table.Head>
               <Table.HeadCell className="p-4">
                 <Checkbox
@@ -173,17 +184,20 @@ const DashPosts = () => {
         show={showModal}
         onClose={() => setShowModal(false)}
         popup
-        size="md"
+        size="sm"
+        
       >
         <Modal.Header />
         <Modal.Body>
           <div className="text-center">
-            <HiOutlineExclamationCircle className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
-            <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-400">
+            <HiOutlineExclamationCircle className="h-5 w-5 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
+            <h3 className="mb-3 text-lg text-gray-500 dark:text-gray-400">
               Are you sure you want to delete this post?
             </h3>
-            <div className="flex justify-center gap-4" >
-              <Button gradientMonochrome="failure" onClick={handleDeletePost}>Yes, I`m sure</Button>
+            <div className="flex justify-center gap-4">
+              <Button gradientMonochrome="failure" onClick={handleDeletePost}>
+                Yes, I`m sure
+              </Button>
               <Button color="gray" onClick={() => setShowModal(false)}>
                 No, cancel
               </Button>

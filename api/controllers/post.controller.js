@@ -1,6 +1,7 @@
 import { errorHandler } from "../utils/error.js";
 import Post from "../models/post.model.js";
 
+// Create new post
 const createPost = async (req, res, next) => {
     if (!req.user.isAdmin) {
       return next(errorHandler(403, 'You are not allowed to create a post'));
@@ -26,6 +27,7 @@ const createPost = async (req, res, next) => {
     }
   };
 
+  // Getposts 
   const getPosts = async (req, res, next)=>{
    try{
     const startIndex =parseInt(req.query.startIndex) || 0;
@@ -69,9 +71,25 @@ const createPost = async (req, res, next) => {
     next(error)
    }
   }
-  
+
+
+// Delete multiple posts by IDs
   const deletePost = async (req, res, next)=>{
-    console.log(req.user.isAdmin, req.user);
+    const {ids} = req.body;
+    if (!req.user.isAdmin){
+      return next(errorHandler(403, 'You are not allowed to delete this post'));
+    }
+    if (!Array.isArray(ids)) {
+      return res.status(400).json({ error: 'Invalid data format. ids should be an array.' });
+    }
+    try {
+      await Post.deleteMany({ _id: { $in: ids } });
+      res.status(200).json({ message: 'Posts deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting posts:', error);
+      res.status(500).json({ error: 'Failed to delete posts' });
+      next(error);
+    }
   }
 
 export {createPost, getPosts, deletePost};
