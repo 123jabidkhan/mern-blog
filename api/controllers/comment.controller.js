@@ -1,6 +1,7 @@
 import Comment from "../models/comment.model.js";
+import { errorHandler } from "../utils/error.js";
 
-const createPost = async(req, res, next)=>{
+const createComment = async(req, res, next)=>{
     try{
         const {userId, postId, content} = req.body;
         if (userId !== req.user.id) {
@@ -22,4 +23,4 @@ const createPost = async(req, res, next)=>{
 
 }
 
-export {createPost};
+export {createComment};
