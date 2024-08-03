@@ -21,6 +21,7 @@ import {
 import { useDispatch } from "react-redux";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import { displayName } from "react-quill";
 
 export default function DashProfile() {
   const { currentUser, error, loading } = useSelector((state) => state.user);
@@ -225,7 +226,7 @@ export default function DashProfile() {
         >
           {loading ? "Loading..." : "Update"}
         </Button>
-        <div className="flex justify-around">
+        <div className={`${currentUser.isAdmin ? 'flex justify-around':''}`}>
         <div>
         {currentUser.isAdmin && (
             <Link to={"/create-post"}>

@@ -85,18 +85,18 @@ const DashPosts = () => {
             {selectedRows && selectedRows?.length > 0 ? (
               <>
                 <div className="display flex justify-content-center">
-                  <span className="text-xl py-1">
+                  <span className="text-xl">
                     {selectedRows.length}{" "}
                     {selectedRows.length === 1 ? "post" : "posts"} marked for
                     deletion &nbsp;
                   </span>
-                    <HiOutlineTrash className="w-6 h-6 text-pink-600 transition-transform duration-200 ease-in-out hover:scale-125 mt-2" size='23' onClick={() => {
+                    <HiOutlineTrash className="w-8 h-8 mr-10 text-pink-600 transition-transform duration-200 ease-in-out hover:scale-125" size='23' onClick={() => {
                       setShowModal(true);
                     }}  />
                 </div>
               </>
             ) : (
-              <span className="text-xl text-pink-500">
+              <span className="text-xl text-pink-500 xs:text-xs">
                 All Posts : ( {userPosts.length} )
               </span>
             )}

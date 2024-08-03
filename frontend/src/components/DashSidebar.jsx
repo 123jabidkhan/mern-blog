@@ -35,7 +35,7 @@ const DashSidebar = () => {
       activeLink: "profile",
     },
     {
-      name: "posts",
+      name: currentUser?.isAdmin ? "posts" : null,
       link: "/dashboard?tab=posts",
       icon: HiDocumentText,
       activeLink: "posts",
