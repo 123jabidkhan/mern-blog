@@ -21,7 +21,7 @@ import {
 import { useDispatch } from "react-redux";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Link } from "react-router-dom";
-import { displayName } from "react-quill";
+// import { displayName } from "react-quill";
 
 export default function DashProfile() {
   const { currentUser, error, loading } = useSelector((state) => state.user);
