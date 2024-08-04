@@ -32,9 +32,9 @@ const DashPosts = () => {
         console.log(error.message);
       }
     };
-    if (currentUser.isAdmin) {
+    // if (currentUser.isAdmin) {
       fetchPosts();
-    }
+    // }
   }, [currentUser._id]);
 
   //   row selected
@@ -98,7 +98,7 @@ const DashPosts = () => {
   };
   return (
     <div className="w-full table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
-      {currentUser.isAdmin && userPosts.length > 0 ? (
+      {currentUser && userPosts.length > 0 ? (
         <>
           <div className="p-4 flex justify-between ">
             {selectedRows && selectedRows?.length > 0 ? (

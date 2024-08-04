@@ -226,34 +226,29 @@ export default function DashProfile() {
         >
           {loading ? "Loading..." : "Update"}
         </Button>
-        <div className={`${currentUser.isAdmin ? 'flex justify-around':''}`}>
-        <div>
-        {currentUser.isAdmin && (
-            <Link to={"/create-post"}>
-              <Button
-                type="button"
-                gradientDuoTone="pinkToOrange"
-                outline
-                className="w-full"
-              >
-                Create a post
-              </Button>
-            </Link>
-          )}
-        </div>
-        <div>
-        <Button
-            className="w-full"
-            gradientDuoTone="pinkToOrange"
-            outline
-            onClick={() => setShowModal(true)}
-          >
-            Delete Account
-          </Button>
-        </div>
-          
-         
-       
+        <div className= "flex justify-around">
+          <div>
+              <Link to={"/create-post"}>
+                <Button
+                  type="button"
+                  gradientDuoTone="pinkToOrange"
+                  outline
+                  className="w-full"
+                >
+                  Create a post
+                </Button>
+              </Link>
+          </div>
+          <div>
+            <Button
+              className="w-full"
+              gradientDuoTone="pinkToOrange"
+              outline
+              onClick={() => setShowModal(true)}
+            >
+              Delete Account
+            </Button>
+          </div>
         </div>
       </form>
 

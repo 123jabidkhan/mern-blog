@@ -29,10 +29,10 @@ const App = () => {
             <Route path="/dashboard" element={<Dashboard />} />
           </Route>
           {/* admin private routes */}
-          <Route element={<AdminPrivateRoute />}>
+          {/* <Route element={<AdminPrivateRoute />}> */}
             <Route path="/create-post" element={<CreatePost />} />
             <Route path='/update-post/:postId' element={<UpdatePost/>}></Route>
-          </Route>
+          {/* </Route> */}
           <Route path="/sign-in" element={<SigIn />} />
           <Route path="/sign-up" element={<SignUp />} />
         </Routes>
