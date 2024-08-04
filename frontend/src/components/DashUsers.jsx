@@ -23,7 +23,7 @@ const DashUsers = () => {
         const data = await res.json();
         if (res.ok) {
           setUsers(data.users);
-          if (data.users.length < 9) {
+          if (data.users.length < 5) {
             setShowMore(false);
           }
         }
@@ -150,7 +150,7 @@ const DashUsers = () => {
             {users.map((row) => (
               <Table.Body className="divide-y" key={row._id}>
                 <Table.Row className="bg-white dark:border-gray-100 dark:bg-gray-800">
-                  <Table.Cell className="p-3">
+                  <Table.Cell className="">
                     <Checkbox
                       checked={selectedRows.includes(row._id)}
                       onChange={() => handleSelectRow(row._id)}
@@ -164,7 +164,7 @@ const DashUsers = () => {
                       <img
                         src={row.profilePicture}
                         alt={row.username}
-                        className="w-10 h-10 object-cover bg-gray-500 rounded-full"
+                        className="w-5 h-5 object-cover bg-gray-500 rounded-full"
                       />
                   </Table.Cell>
                   <Table.Cell className="font-medium text-gray-900 dark:text-white">

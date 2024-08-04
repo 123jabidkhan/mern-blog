@@ -20,7 +20,7 @@ const DashComments = () => {
         const data = await res.json();
         if (res.ok) {
           setComments(data.comments);
-          if (data.users.length < 9) {
+          if (data.users.length < 5) {
             setShowMore(false);
           }
         }
@@ -85,7 +85,7 @@ const DashComments = () => {
           const data = await res.json();
           if (res.ok) {
             setComments((prev) => [...prev, ...data.comments]);
-            if (data.comments.length < 9) {
+            if (data.comments.length < 5) {
               setShowMore(false);
             }
           }
@@ -176,7 +176,7 @@ const DashComments = () => {
               </Table.Body>
             ))}
           </Table>
-          {showMore && (
+          {showMore.length > 5 && (
             <button onClick={handleShowMore} className="w-full text-pink-500 self-center text-sm py-7">
               Show more
             </button>

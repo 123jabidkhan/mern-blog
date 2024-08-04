@@ -89,7 +89,7 @@ import bcrypt from 'bcrypt';
     }
     try{
       const startIndex = parseInt(req.query.startIndex) || 0;
-    const limit = parseInt(req.query.limit) || 9;
+    const limit = parseInt(req.query.limit) || 5;
     const sortDirection = req.query.sort === 'asc' ? 1 : -1;
 
       const users = await User.find({})

@@ -2,7 +2,11 @@ import { Modal, Table, Button, Checkbox } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { HiOutlineExclamationCircle, HiOutlineTrash, HiPlus} from "react-icons/hi";
+import {
+  HiOutlineExclamationCircle,
+  HiOutlineTrash,
+  HiPlus,
+} from "react-icons/hi";
 // import { set } from 'mongoose';
 
 const DashPosts = () => {
@@ -20,7 +24,7 @@ const DashPosts = () => {
         const data = await res.json();
         if (res.ok) {
           setUserPosts(data.posts);
-          if (data.posts.length < 9) {
+          if (data.posts.length < 5) {
             setShowMore(false);
           }
         }
@@ -55,27 +59,42 @@ const DashPosts = () => {
   // Delete posts byIDS
   const handleDeletePost = async () => {
     setShowModal(false);
-    try{
+    try {
       const res = await fetch(`/api/post/deletepost/`, {
         method: "DELETE",
         headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ ids: selectedRows }),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ids: selectedRows }),
       });
       const data = await res.json();
-      if(!res.ok){
+      if (!res.ok) {
         console.log(data.message);
-      }else{
+      } else {
         setUserPosts((prev) =>
-          prev.filter((post) => !selectedRows.includes(post._id)));
-        setSelectedRows([])
+          prev.filter((post) => !selectedRows.includes(post._id))
+        );
+        setSelectedRows([]);
       }
-    }
-    catch(error){
+    } catch (error) {
       console.log(error.message);
     }
-    
+  };
+
+  const handleShowMore = async () => {
+    const startIndex = userPosts.length;
+    try {
+      const res = await fetch(`/api/post/getPosts?startIndex=${startIndex}`);
+      const data = await res.json();
+      if (res.ok) {
+        setUserPosts((prev) => [...prev, ...data.posts]);
+        if (data.posts.length < 9) {
+          setShowMore(false);
+        }
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   };
   return (
     <div className="w-full table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
@@ -90,9 +109,13 @@ const DashPosts = () => {
                     {selectedRows.length === 1 ? "post" : "posts"} marked for
                     deletion &nbsp;
                   </span>
-                    <HiOutlineTrash className="w-8 h-8 mr-10 text-pink-600 transition-transform duration-200 ease-in-out hover:scale-125" size='23' onClick={() => {
+                  <HiOutlineTrash
+                    className="w-6 h-6 mr-10 text-pink-600 transition-transform duration-200 ease-in-out hover:scale-125"
+                    size="23"
+                    onClick={() => {
                       setShowModal(true);
-                    }}  />
+                    }}
+                  />
                 </div>
               </>
             ) : (
@@ -100,9 +123,14 @@ const DashPosts = () => {
                 All Posts : ( {userPosts.length} )
               </span>
             )}
-<Link to={'/create-post'}>
-            <Button gradientMonochrome="pink" size='md'><HiPlus size='22'/>&nbsp;  Publish Post</Button>
-</Link>
+            <Link to={"/create-post"}>
+              <Button gradientMonochrome="pink" size="sm">
+                {" "}
+                &nbsp;{" "}
+                <span className="hidden sm:inline ml-2"> Publish Post</span>
+               <HiPlus size="20" />
+              </Button>
+            </Link>
           </div>
           <Table hoverable className="shadow-xl">
             <Table.Head>
@@ -175,17 +203,23 @@ const DashPosts = () => {
             ))}
           </Table>
           {showMore && (
-            <button className="w-full text-teal-500 self-center text-sm py-7">
+            <button
+              onClick={handleShowMore}
+              className="w-full text-teal-500 self-center text-sm py-7"
+            >
               Show more
             </button>
           )}
         </>
       ) : (
         <div className="flex gap-5">
-        <p className="text-xl">You have no posts yet!</p>
-        <Link to={'/create-post'}>
-            <Button gradientMonochrome="pink" size='xs'><HiPlus size='20'/>&nbsp;  Publish Post</Button>
-</Link>
+          <p className="text-xl">You have no posts yet!</p>
+          <Link to={"/create-post"}>
+            <Button gradientMonochrome="pink" size="xs">
+              <HiPlus size="20" />
+              &nbsp; Publish Post
+            </Button>
+          </Link>
         </div>
       )}
       <Modal
@@ -193,7 +227,6 @@ const DashPosts = () => {
         onClose={() => setShowModal(false)}
         popup
         size="sm"
-        
       >
         <Modal.Header />
         <Modal.Body>

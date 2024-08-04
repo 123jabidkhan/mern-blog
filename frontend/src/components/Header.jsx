@@ -48,18 +48,18 @@ const Header = () => {
           className="hidden lg:inline"
         />
       </form>
-      <Button className="w-12 h-10 lg:hidden" color="gray" pill>
-        <AiOutlineSearch />
-      </Button>
+      {/* <Button  color="gray" pill> */}
+        <AiOutlineSearch className="w-6 h-6 mr-10 text-pink-600 transition-transform duration-200 ease-in-out hover:scale-125 lg:hidden" />
+      {/* </Button> */}
 
-      <div className="flex gap-2 md:order-2">
+      <div className="flex gap-2 md:order-1">
         <Button
-          className="w-12 h-10 hidden sm:inline"
+          className="w-12 h-10 hover:text-pink-600 "
           color="gray"
           pill
           onClick={() => dispatch(toggleTheme())}
         >
-          {theme === "light" ? <FaSun /> : <FaMoon />}
+          {theme === "light" ? <FaSun  className="hover:text-pink-600"/> : <FaMoon className="hover:text-pink-600" />}
         </Button>
         {currentUser ? (
           <Dropdown
