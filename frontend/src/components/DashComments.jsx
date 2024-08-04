@@ -3,26 +3,23 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   HiOutlineExclamationCircle,
-  HiOutlineTrash,
-  HiCheck,
-  HiOutlineX
+  HiOutlineTrash
 } from "react-icons/hi";
-// import { set } from 'mongoose';
 
-const DashUsers = () => {
+const DashComments = () => {
   const { currentUser } = useSelector((state) => state.user);
-  const [users, setUsers] = useState([]);
+  const [comments, setComments] = useState([]);
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchComments = async () => {
       try {
-        const res = await fetch(`/api/user/getusers`);
+        const res = await fetch(`/api/comment/getComments`);
         const data = await res.json();
         if (res.ok) {
-          setUsers(data.users);
+          setComments(data.comments);
           if (data.users.length < 9) {
             setShowMore(false);
           }
@@ -32,7 +29,7 @@ const DashUsers = () => {
       }
     };
     if (currentUser.isAdmin) {
-      fetchUsers();
+      fetchComments();
     }
   }, [currentUser._id]);
 
@@ -48,7 +45,7 @@ const DashUsers = () => {
   // all rows selected
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelectedRows = users.map((row) => row._id);
+      const newSelectedRows = comments.map((row) => row._id);
       setSelectedRows(newSelectedRows);
       return;
     }
@@ -59,18 +56,18 @@ const DashUsers = () => {
     const handleDeletePost = async () => {
       setShowModal(false);
       try{
-        const res = await fetch(`/api/user/deleteUsers/`, {
+        const res = await fetch(`/api/comment/deleteComments/`, {
           method: "DELETE",
           headers: {
                 'Content-Type': 'application/json',
               },
-              body: JSON.stringify({ ids: selectedRows }),
+          body: JSON.stringify({ ids: selectedRows }),
         });
         const data = await res.json();
         if(!res.ok){
           console.log(data.message);
         }else{
-          setUsers((prev) =>
+          setComments((prev) =>
             prev.filter((post) => !selectedRows.includes(post._id)));
           setSelectedRows([])
         }
@@ -82,13 +79,13 @@ const DashUsers = () => {
     };
 
     const handleShowMore = async () => {
-        const startIndex = users.length;
+        const startIndex = comments.length;
         try {
-          const res = await fetch(`/api/user/getusers?startIndex=${startIndex}`);
+          const res = await fetch(`/api/comment/getComments?startIndex=${startIndex}`);
           const data = await res.json();
           if (res.ok) {
-            setUsers((prev) => [...prev, ...data.users]);
-            if (data.users.length < 9) {
+            setComments((prev) => [...prev, ...data.comments]);
+            if (data.comments.length < 9) {
               setShowMore(false);
             }
           }
@@ -98,7 +95,8 @@ const DashUsers = () => {
       };
   return (
     <div className="w-full table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
-      {currentUser.isAdmin && users.length > 0 ? (
+     
+      {(currentUser.isAdmin && comments.length > 0) ? (
         <>
           <div className="p-4 flex justify-between ">
             {selectedRows && selectedRows?.length > 0 ? (
@@ -106,7 +104,7 @@ const DashUsers = () => {
                 <div className="display flex justify-content-center">
                   <span className="text-xl py-1">
                     {selectedRows.length}{" "}
-                    {selectedRows.length === 1 ? "user" : "users"} marked for
+                    {selectedRows.length === 1 ? "comment" : "comments"} marked for
                     deletion &nbsp;
                   </span>
                   <HiOutlineTrash
@@ -120,7 +118,7 @@ const DashUsers = () => {
               </>
             ) : (
               <span className="text-xl text-pink-500">
-                All Users : ( {users.length} )
+                All Comments : ( {comments.length} )
               </span>
             )}
            
@@ -130,24 +128,24 @@ const DashUsers = () => {
               <Table.HeadCell className="p-2">
                 <Checkbox
                   checked={
-                    selectedRows.length === users.length &&
+                    selectedRows.length === comments.length &&
                     selectedRows.length > 0
                   }
                   className="text-pink-600 focus:ring-pink-500"
                   onChange={handleSelectAllClick}
                   indeterminate={
                     selectedRows.length > 0 &&
-                    selectedRows.length < users.length
+                    selectedRows.length < comments.length
                   }
                 />
               </Table.HeadCell>
-              <Table.HeadCell> Created At </Table.HeadCell>
-              <Table.HeadCell>  Profile Image</Table.HeadCell>
-              <Table.HeadCell> Username</Table.HeadCell>
-              <Table.HeadCell> Email Id</Table.HeadCell>
-              <Table.HeadCell> Admin </Table.HeadCell>
+              <Table.HeadCell>Date updated</Table.HeadCell>
+              <Table.HeadCell>Comment content</Table.HeadCell>
+              <Table.HeadCell>Number of likes</Table.HeadCell>
+              <Table.HeadCell>PostId</Table.HeadCell>
+              <Table.HeadCell>UserId</Table.HeadCell>
             </Table.Head>
-            {users.map((row) => (
+            {comments.map((row) => (
               <Table.Body className="divide-y" key={row._id}>
                 <Table.Row className="bg-white dark:border-gray-100 dark:bg-gray-800">
                   <Table.Cell className="p-3">
@@ -161,24 +159,17 @@ const DashUsers = () => {
                     {new Date(row.createdAt).toLocaleDateString()}
                   </Table.Cell>
                   <Table.Cell>
-                      <img
-                        src={row.profilePicture}
-                        alt={row.username}
-                        className="w-10 h-10 object-cover bg-gray-500 rounded-full"
-                      />
+                     {row.content}
                   </Table.Cell>
                   <Table.Cell className="font-medium text-gray-900 dark:text-white">
-                      {row.username}
+                      {row.numberOfLikes}
                   </Table.Cell>
                   <Table.Cell className="font-medium text-gray-900 dark:text-white">
-                    {/* <Link
-                      className="font-medium text-gray-900 dark:text-white"
-                    > */}
-                      {row.email}
-                    {/* </Link> */}
+                    
+                      {row.postId}
                   </Table.Cell>
                   <Table.Cell>
-                  {row.isAdmin ? <HiCheck className='text-green-500' size='25' /> : <HiOutlineX className='text-red-500' size='25'  />}
+                  {row.userId}
                   </Table.Cell>
                  
                 </Table.Row>
@@ -192,7 +183,7 @@ const DashUsers = () => {
           )}
         </>
       ) : (
-        <p className="text-xl">You have no users yet!</p>
+        <p className="text-xl">You have no comments yet!</p>
       )}
       <Modal
         show={showModal}
@@ -222,4 +213,4 @@ const DashUsers = () => {
   );
 };
 
-export default DashUsers;
+export default DashComments;
