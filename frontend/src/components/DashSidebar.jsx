@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { HiMenuAlt3 } from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
 import {
   HiUser,
-  HiArrowSmRight,
+  HiLockClosed,
   HiDocumentText,
   HiOutlineUserGroup,
   HiAnnotation,
-  HiChartPie
+  HiChartPie,
+  HiOutlineArrowRight,
 } from "react-icons/hi";
 import { RxCross2 } from "react-icons/rx";
 import { useDispatch } from "react-redux";
@@ -84,10 +84,10 @@ const DashSidebar = () => {
       <div
         className={`bg-dark min-h-screen border-r-2 border-red-100 border-line ${
           open ? "w-60" : "w-16"
-        } duration-500 text-gray-500 dark:text-white px-4 `}
+        } duration-500 text-gray-400 dark:text-white px-4 `}
       >
         <div className="py-3 flex justify-end">
-          <HiMenuAlt3
+          <HiOutlineArrowRight
             size={26}
             onClick={() => setOpen(!open)}
             className={`cursor-pointer ${open && 'hidden'}`}
@@ -106,9 +106,9 @@ const DashSidebar = () => {
               <Link
                 to={menu?.link}
                 key={i}
-                className={` ${tab === menu?.activeLink ? `bg-gray-800` : ""} ${
+                className={` ${tab === menu?.activeLink ? `bg-pink-700` : ""} ${
                   menu?.margin && "mt-5"
-                }   group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-gray-800 rounded-md`}
+                }   group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-pink-700 rounded-md`}
               >
                 <div>{React.createElement(menu?.icon, { size: "20" })}</div>
                 <h2
@@ -132,7 +132,7 @@ const DashSidebar = () => {
             ))}
 
           <Link 
-            className={` "mt-5" group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-gray-800 rounded-md`}
+            className={` "mt-5" group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-pink-700 rounded-md`}
             onClick={()=>handleSignout()}
 
           >
@@ -140,7 +140,7 @@ const DashSidebar = () => {
               {React.createElement(
                 'button',
                 null,
-                React.createElement(HiArrowSmRight, { size: 20, color: "#eb4ba8e3" })
+                React.createElement(HiLockClosed, { size: 20, color: "grey" })
               )}
             </div>
             <h2

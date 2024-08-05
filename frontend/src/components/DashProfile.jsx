@@ -189,7 +189,7 @@ export default function DashProfile() {
           <img
             src={imageFileUrl || currentUser.profilePicture}
             alt="user"
-            className={`rounded-full w-full h-full object-cover border-8 border-[lightgray] ${
+            className={`rounded-full w-full h-full object-cover border-8 border-[#df6799] ${
               imageFileUploadProgress &&
               imageFileUploadProgress < 100 &&
               "opacity-60"
@@ -221,7 +221,7 @@ export default function DashProfile() {
         />
         <Button
           type="submit"
-          gradientDuoTone="pinkToOrange"
+          gradientMonochrome="pink"
           disabled={loading || imageFileUploading}
         >
           {loading ? "Loading..." : "Update"}
@@ -231,7 +231,7 @@ export default function DashProfile() {
               <Link to={"/create-post"}>
                 <Button
                   type="button"
-                  gradientDuoTone="pinkToOrange"
+                  gradientMonochrome="pink"
                   outline
                   className="w-full"
                 >
@@ -242,7 +242,7 @@ export default function DashProfile() {
           <div>
             <Button
               className="w-full"
-              gradientDuoTone="pinkToOrange"
+              gradientMonochrome="pink"
               outline
               onClick={() => setShowModal(true)}
             >
