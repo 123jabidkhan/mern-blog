@@ -110,7 +110,7 @@ const DashSidebar = () => {
                   menu?.margin && "mt-5"
                 }   group flex items-center text-sm  gap-3.5 font-medium p-2  hover:border-l-4 border-pink-700 hover:bg-pink-400 rounded-md`}
               >
-                <div>{React.createElement(menu?.icon, { size: "20" })}</div>
+                <div className="">{React.createElement(menu?.icon, { size: "17" })}</div>
                 <h2
                   style={{
                     transitionDelay: `${i + 3}00ms`,
