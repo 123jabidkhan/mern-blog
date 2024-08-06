@@ -68,8 +68,8 @@ const DashboardCompo = () =>{
   }, [currentUser]);
   return (
     <div className='p-3 md:mx-auto'>
-      <div className='flex-wrap flex gap-4 justify-center'>
-        <div className='flex flex-col p-3 dark:bg-pink-800 dark:text-white gap-4 md:w-72 w-full rounded-md shadow-md'>
+      <div className='flex-wrap flex gap-2 justify-center'>
+        <div className='flex flex-col p-3 dark:bg-pink-800 dark:text-white gap-4 md:w-80 w-full rounded-md shadow-md'>
           <div className='flex justify-between'>
             <div className=''>
               <h3 className='dark:text-white text-md uppercase'>Total Users</h3>
@@ -85,7 +85,7 @@ const DashboardCompo = () =>{
             <div className='dark:text-white' >Last month</div>
           </div>
         </div>
-        <div className='flex flex-col p-3 dark:text-white dark:bg-orange-800 gap-4 md:w-72 w-full rounded-md shadow-md'>
+        <div className='flex flex-col p-3 dark:text-white dark:bg-yellow-800 gap-4 md:w-80 w-full rounded-md shadow-md'>
           <div className='flex justify-between'>
             <div className=''>
               <h3 className='dark:text-white text-md uppercase'>
@@ -93,7 +93,7 @@ const DashboardCompo = () =>{
               </h3>
               <p className='text-2xl'>{totalComments}</p>
             </div>
-            <HiAnnotation className='bg-indigo-600  dark:text-white rounded-full text-5xl p-3 shadow-lg' />
+            <HiAnnotation className='bg-red-600  dark:text-white rounded-full text-5xl p-3 shadow-lg' />
           </div>
           <div className='flex  gap-2 text-sm'>
             <span className='text-green-500 flex items-center'>
@@ -103,7 +103,7 @@ const DashboardCompo = () =>{
             <div className='dark:text-white'>Last month</div>
           </div>
         </div>
-        <div className='flex flex-col p-3 dark:text-white dark:bg-blue-800 gap-4 md:w-72 w-full rounded-md shadow-md'>
+        <div className='flex flex-col p-3 dark:text-white dark:bg-blue-800 gap-4 md:w-80 w-full rounded-md shadow-md'>
           <div className='flex justify-between'>
             <div className=''>
               <h3 className='dark:text-white text-md uppercase'>Total Posts</h3>
@@ -120,7 +120,7 @@ const DashboardCompo = () =>{
           </div>
         </div>
       </div>
-      <div className='flex flex-wrap gap-4 py-3 mx-auto justify-center'>
+      <div className='flex flex-wrap gap-2 py-3 mx-auto justify-center'>
         <div className='flex flex-col w-full md:w-auto shadow-md p-2 rounded-md dark:bg-gray-800'>
           <div className='flex justify-between  p-3 text-sm font-semibold'>
             <h1 className='text-center p-2'>Recent users</h1>

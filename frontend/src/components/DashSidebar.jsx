@@ -84,7 +84,7 @@ const DashSidebar = () => {
       <div
         className={`bg-dark min-h-screen border-r-2 border-red-100 border-line ${
           open ? "w-60" : "w-16"
-        } duration-500 text-gray-400 dark:text-white px-4 `}
+        } duration-500 text-gray-600 dark:text-white px-4 `}
       >
         <div className="py-3 flex justify-end">
           <HiOutlineArrowRight
@@ -106,9 +106,9 @@ const DashSidebar = () => {
               <Link
                 to={menu?.link}
                 key={i}
-                className={` ${tab === menu?.activeLink ? `bg-pink-700` : ""} ${
+                className={`${tab === menu?.activeLink ? `border-l-4 bg-pink-400` : ""} ${
                   menu?.margin && "mt-5"
-                }   group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-pink-700 rounded-md`}
+                }   group flex items-center text-sm  gap-3.5 font-medium p-2  hover:border-l-4 border-pink-700 hover:bg-pink-400 rounded-md`}
               >
                 <div>{React.createElement(menu?.icon, { size: "20" })}</div>
                 <h2
@@ -132,9 +132,8 @@ const DashSidebar = () => {
             ))}
 
           <Link 
-            className={` "mt-5" group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-pink-700 rounded-md`}
+            className={` "mt-5" group flex items-center text-sm  gap-3.5 font-medium p-2  hover:border-l-4 border-pink-700 hover:bg-pink-400 rounded-md`}
             onClick={()=>handleSignout()}
-
           >
             <div>
               {React.createElement(

@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaSun, FaMoon } from "react-icons/fa";
 import { Dropdown } from "flowbite-react";
-import { HiLogout } from "react-icons/hi";
+import { HiLockClosed } from "react-icons/hi";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice";
 import {signoutSuccess} from '../redux/user/userSlice';
@@ -79,6 +79,9 @@ const Header = () => {
             <Link to={"/dashboard?tab=profile"}>
               <Dropdown.Item>Profile</Dropdown.Item>
             </Link>
+            <Link to={"/dashboard?tab=dash"}>
+              <Dropdown.Item>Dashboard</Dropdown.Item>
+            </Link>
             <Dropdown.Divider />
 
           
@@ -91,8 +94,7 @@ const Header = () => {
           <Link  to="/projects" className="hover:text-pink-500 lg:hidden md:hidden">
             <Dropdown.Item>Projects</Dropdown.Item>
           </Link>
-            
-            <Dropdown.Item icon={HiLogout} onClick={handleSignout}>Sign out</Dropdown.Item>
+            <Dropdown.Item icon={HiLockClosed} onClick={handleSignout}>Sign out</Dropdown.Item>
           </Dropdown>
         ) : (
           <Link to="/sign-in">
@@ -118,6 +120,11 @@ const Header = () => {
         <Navbar.Link active={path === "/projects"} as={"div"}>
           <Link to="/projects" className="hover:text-pink-500">
             Projects
+          </Link>
+        </Navbar.Link>
+        <Navbar.Link active={path === "/projects"} as={"div"}>
+          <Link to="/dashboard?tab=dash" className="hover:text-pink-500">
+            Dashboard
           </Link>
         </Navbar.Link>
       </Navbar.Collapse> 
