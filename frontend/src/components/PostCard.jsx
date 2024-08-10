@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const PostCard = ({ post, className }) => {
   return (
-    <div className="group relative w-full shadow-sm shadow-pink-700  overflow-hidden rounded-lg sm:w-[430px] transition-all">
+    <div className="group relative w-full shadow-md shadow-[#ff7b86]  overflow-hidden rounded-lg sm:w-[430px] transition-all">
       {/* <Link to={`/blog/${post.slug}`}> */}
       <img
         src={post.image}
@@ -29,13 +29,13 @@ const PostCard = ({ post, className }) => {
               className="w-9 h-9 md:w-10 md:h-10 rounded-full"
             />
             <div className="flex flex-col">
-              <h4 className="font-bold italic text-dark-soft text-sm md:text-base">
+              <h4 className="font-bold italic text-dark-soft text-sm md:text-base text-[#ff5360]">
                 jabidkhan
               </h4>
               <div className="flex items-center gap-x-2"></div>
             </div>
           </div>
-          <span className="font-bold text-dark-light italic text-sm md:text-base">
+          <span className="font-bold text-[#ff5360] italic text-sm md:text-base">
             {new Date(post.createdAt).getDate()}{" "}
             {new Date(post.createdAt).toLocaleString("default", {
               month: "long",

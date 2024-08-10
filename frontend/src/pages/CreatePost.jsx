@@ -122,7 +122,7 @@ const CreatePost = () => {
           <FileInput type="file" accept="image/*" onChange={handleFileChange} />
           <Button
             type="button"
-            gradientDuoTone="pinkToOrange"
+            style={{background:"#ff5360"}}
             size="sm"
             outline
             onClick={handleUpdloadImage}
@@ -162,11 +162,11 @@ const CreatePost = () => {
             setFormData({ ...formData, content: value });
           }}
         />
-        <Button type="submit" className="mt-2" gradientDuoTone="pinkToOrange">
+        <Button type="submit" className="mt-2" style={{background:"#ff5360"}}>
           Publish
         </Button>
         {/* <Link to={'/dashboard?tab=posts'} className="w-50" > */}
-          <Button onClick={()=>navigate('/dashboard?tab=posts')} outline gradientDuoTone="pinkToOrange">Show All Posts</Button>
+          <Button onClick={()=>navigate('/dashboard?tab=posts')} outline style={{background:"#ff5360"}}>Show All Posts</Button>
         {/* </Link> */}
         {publishError && (
           <Alert className="mt-5" color="failure">

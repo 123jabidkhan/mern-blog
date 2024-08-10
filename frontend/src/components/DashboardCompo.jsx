@@ -124,7 +124,7 @@ const DashboardCompo = () =>{
         <div className='flex flex-col w-full md:w-auto shadow-md p-2 rounded-md dark:bg-gray-800'>
           <div className='flex justify-between  p-3 text-sm font-semibold'>
             <h1 className='text-center p-2'>Recent users</h1>
-            <Button outline color='pink'>
+            <Button outline style={{background:"#ff5360"}}>
               <Link to={'/dashboard?tab=users'}>See all</Link>
             </Button>
           </div>
@@ -153,7 +153,7 @@ const DashboardCompo = () =>{
         <div className='flex flex-col w-full md:w-auto shadow-md p-2 rounded-md dark:bg-gray-800'>
           <div className='flex justify-between  p-3 text-sm font-semibold'>
             <h1 className='text-center p-2'>Recent comments</h1>
-            <Button outline color='pink'>
+            <Button outline style={{background:"#ff5360"}}>
               <Link to={'/dashboard?tab=comments'}>See all</Link>
             </Button>
           </div>
@@ -178,7 +178,7 @@ const DashboardCompo = () =>{
         <div className='flex flex-col w-full md:w-auto shadow-md p-2 rounded-md dark:bg-gray-800'>
           <div className='flex justify-between  p-3 text-sm font-semibold'>
             <h1 className='text-center p-2'>Recent posts</h1>
-            <Button outline color='pink'>
+            <Button outline style={{background:"#ff5360"}}>
               <Link to={'/dashboard?tab=posts'}>See all</Link>
             </Button>
           </div>

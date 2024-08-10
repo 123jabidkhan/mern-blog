@@ -144,7 +144,7 @@ export default function UpdatePost() {
           />
           <Button
             type='button'
-            gradientDuoTone='pinkToOrange'
+            style={{background:"#ff5360"}}
             size='sm'
             outline
             onClick={handleUpdloadImage}
@@ -180,7 +180,7 @@ export default function UpdatePost() {
             setFormData({ ...formData, content: value });
           }}
         />
-        <Button type='submit' gradientDuoTone='pinkToOrange'>
+        <Button type='submit' style={{background:"#ff5360"}}>
           Update post
         </Button>
         {publishError && (

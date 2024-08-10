@@ -35,10 +35,10 @@ const Header = () => {
         to="/"
         className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white"
       >
-        <span className="px-2 py-1 bg-gradient-to-r from-pink-500  to-orange-500 rounded-lg text-white">
-          Blog &nbsp;&nbsp;&nbsp;&nbsp;
+        <span className="px-2 py-1 bg-gradient-to-r from-[#ff5360]  to-green-400 rounded-lg text-white">
+          Blog Hub
+          &nbsp;&nbsp;&nbsp;&nbsp;
         </span>
-        Hub
       </Link>
       <form>
         <TextInput
@@ -49,17 +49,17 @@ const Header = () => {
         />
       </form>
       {/* <Button  color="gray" pill> */}
-        <AiOutlineSearch className="w-6 h-6 mr-10 text-pink-600 transition-transform duration-200 ease-in-out hover:scale-125 lg:hidden" />
+        <AiOutlineSearch className="w-8 h-8 mr-10 text-[#ff5360] transition-transform duration-200 ease-in-out hover:scale-125 lg:hidden" />
       {/* </Button> */}
 
       <div className="flex gap-2 md:order-1">
         <Button
-          className="w-12 h-10 hover:text-pink-600 "
+          className="w-12 h-10 hover:text-[#ff5360]"
           color="gray"
           pill
           onClick={() => dispatch(toggleTheme())}
         >
-          {theme === "light" ? <FaSun  className="hover:text-pink-600"/> : <FaMoon className="hover:text-pink-600" />}
+          {theme === "light" ? <FaSun  className="hover:text-[#ff5360]"/> : <FaMoon className="hover:text-[#ff5360]" />}
         </Button>
         {currentUser ? (
           <Dropdown
@@ -85,20 +85,20 @@ const Header = () => {
             <Dropdown.Divider />
 
           
-            <Link  to="/" className="hover:text-pink-500 lg:hidden md:hidden">
+            <Link  to="/" className="hover:text-[#ff5360] lg:hidden md:hidden">
             <Dropdown.Item>Home</Dropdown.Item>
           </Link>
-          <Link  to="/about" className="hover:text-pink-500 lg:hidden md:hidden">
+          <Link  to="/about" className="hover:text-[#ff5360] lg:hidden md:hidden">
             <Dropdown.Item>About</Dropdown.Item>
           </Link>
-          <Link  to="/projects" className="hover:text-pink-500 lg:hidden md:hidden">
+          <Link  to="/projects" className="hover:text-[#ff5360] lg:hidden md:hidden">
             <Dropdown.Item>Projects</Dropdown.Item>
           </Link>
             <Dropdown.Item icon={HiLockClosed} onClick={handleSignout}>Sign out</Dropdown.Item>
           </Dropdown>
         ) : (
           <Link to="/sign-in">
-            <Button gradientDuoTone="pinkToOrange" outline>
+            <Button style={{background:"#ff5360"}} outline>
               Sign In
             </Button>
           </Link>
@@ -108,25 +108,30 @@ const Header = () => {
       </div>
       <Navbar.Collapse>
         <Navbar.Link active={path === "/"} as={"div"}>
-          <Link to="/" className="hover:text-pink-500">
+          <Link to="/" className="hover:text-[#ff5360]">
             Home
           </Link>
         </Navbar.Link>
         <Navbar.Link active={path === "/about"} as={"div"}>
-          <Link to="/about" className="hover:text-pink-500">
+          <Link to="/about" className="hover:text-[#ff5360]">
             About
           </Link>
         </Navbar.Link>
         <Navbar.Link active={path === "/projects"} as={"div"}>
-          <Link to="/projects" className="hover:text-pink-500">
+          <Link to="/projects" className="hover:text-[#ff5360]">
             Projects
           </Link>
         </Navbar.Link>
-        <Navbar.Link active={path === "/projects"} as={"div"}>
-          <Link to="/dashboard?tab=dash" className="hover:text-pink-500">
+        {
+          currentUser && (
+            <Navbar.Link active={path === "/projects"} as={"div"}>
+          <Link to="/dashboard?tab=dash" className="hover:text-[#ff5360]">
             Dashboard
           </Link>
         </Navbar.Link>
+          )
+        }
+        
       </Navbar.Collapse> 
     </Navbar>
   );

@@ -54,7 +54,7 @@ export default function PostPage() {
   if (loading)
     return (
       <div className='flex justify-center items-center min-h-screen'>
-        <Spinner size='xl' color='pink' />
+        <Spinner size='xl' />
       </div>
     );
   return (

@@ -108,7 +108,7 @@ const DashComments = () => {
                     deletion &nbsp;
                   </span>
                   <HiOutlineTrash
-                    className="w-6 h-6 text-pink-600 transition-transform duration-200 ease-in-out hover:scale-125 mt-2"
+                    className="w-6 h-6 text-[red] transition-transform duration-200 ease-in-out hover:scale-125 mt-2"
                     size="23"
                     onClick={() => {
                       setShowModal(true);
@@ -117,7 +117,7 @@ const DashComments = () => {
                 </div>
               </>
             ) : (
-              <span className="text-xl text-pink-500">
+              <span className="text-xl text-[#ff5360] font-bold">
                 All Comments : ( {comments.length} )
               </span>
             )}
@@ -131,7 +131,7 @@ const DashComments = () => {
                     selectedRows.length === comments.length &&
                     selectedRows.length > 0
                   }
-                  className="text-pink-600 focus:ring-pink-500"
+                  className="text-[#ff5360] focus:ring-[#ff5360]"
                   onChange={handleSelectAllClick}
                   indeterminate={
                     selectedRows.length > 0 &&
@@ -152,7 +152,7 @@ const DashComments = () => {
                     <Checkbox
                       checked={selectedRows.includes(row._id)}
                       onChange={() => handleSelectRow(row._id)}
-                      className="text-pink-600 focus:ring-pink-500"
+                      className="text-[#ff5360] focus:ring-[#ff5360]"
                     />
                   </Table.Cell>
                   <Table.Cell>
@@ -177,7 +177,7 @@ const DashComments = () => {
             ))}
           </Table>
           {showMore.length > 5 && (
-            <button onClick={handleShowMore} className="w-full text-pink-500 self-center text-sm py-7">
+            <button onClick={handleShowMore} className="w-full text-[#ff5360] self-center text-sm py-7">
               Show more
             </button>
           )}

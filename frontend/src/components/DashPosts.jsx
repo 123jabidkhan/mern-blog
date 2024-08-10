@@ -110,7 +110,7 @@ const DashPosts = () => {
                     deletion &nbsp;
                   </span>
                   <HiOutlineTrash
-                    className="w-6 h-6 mr-10 text-pink-600 transition-transform duration-200 ease-in-out hover:scale-125"
+                    className="w-6 h-6 mr-10 text-[#bd0e0e] transition-transform duration-200 ease-in-out hover:scale-125"
                     size="23"
                     onClick={() => {
                       setShowModal(true);
@@ -119,12 +119,12 @@ const DashPosts = () => {
                 </div>
               </>
             ) : (
-              <span className="text-xl text-pink-500 xs:text-xs">
+              <span className="text-xl text-[#ff5360] font-bold xs:text-xs">
                 All Posts : ( {userPosts.length} )
               </span>
             )}
             <Link to={"/create-post"}>
-              <Button gradientMonochrome="pink" size="sm">
+              <Button style={{background:"#ff5360"}} size="sm">
                 {" "}
                 &nbsp;{" "}
                 <span className="hidden sm:inline ml-2"> Publish Post</span>
@@ -140,7 +140,7 @@ const DashPosts = () => {
                     selectedRows.length === userPosts.length &&
                     selectedRows.length > 0
                   }
-                  className="text-pink-600 focus:ring-pink-500"
+                  className="text-[#ff5360] focus:ring-[#ff5360]"
                   onChange={handleSelectAllClick}
                   indeterminate={
                     selectedRows.length > 0 &&
@@ -163,7 +163,7 @@ const DashPosts = () => {
                     <Checkbox
                       checked={selectedRows.includes(row._id)}
                       onChange={() => handleSelectRow(row._id)}
-                      className="text-pink-600 focus:ring-pink-500"
+                      className="text-[#ff5360] focus:ring-[#ff5360]"
                     />
                   </Table.Cell>
                   <Table.Cell>
@@ -190,9 +190,9 @@ const DashPosts = () => {
                   <Table.Cell>
                     <Link to={`/update-post/${row._id}`}>
                       <Button
-                        className="rounded"
+                        rounded
                         size="xs"
-                        gradientMonochrome="pink"
+                        style={{background:"#ff5360"}}
                       >
                         Edit
                       </Button>
@@ -205,7 +205,7 @@ const DashPosts = () => {
           {showMore && (
             <button
               onClick={handleShowMore}
-              className="w-full text-pink-600 self-center text-sm py-7"
+              className="w-full text-[#ff5360] self-center text-sm py-7"
             >
               Show more
             </button>
@@ -215,7 +215,7 @@ const DashPosts = () => {
         <div className="flex gap-5">
           <p className="text-xl">You have no posts yet!</p>
           <Link to={"/create-post"}>
-            <Button gradientMonochrome="pink" size="xs">
+            <Button gradientM size="xs">
               <HiPlus size="20" />
               &nbsp; Publish Post
             </Button>

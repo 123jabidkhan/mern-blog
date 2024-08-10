@@ -106,9 +106,9 @@ const DashSidebar = () => {
               <Link
                 to={menu?.link}
                 key={i}
-                className={`${tab === menu?.activeLink ? `border-l-4 bg-pink-400` : ""} ${
+                className={`${tab === menu?.activeLink ? `border-l-4 bg-[#f1bcbf]` : ""} ${
                   menu?.margin && "mt-5"
-                }   group flex items-center text-sm  gap-3.5 font-medium p-2  hover:border-l-4 border-pink-700 hover:bg-pink-400 rounded-md`}
+                }   group flex items-center text-sm  gap-3.5 font-medium p-2  hover:border-l-4 border-[#ff5360] hover:bg-[#f1bcbf] rounded-md`}
               >
                 <div className="">{React.createElement(menu?.icon, { size: "17" })}</div>
                 <h2
@@ -132,7 +132,7 @@ const DashSidebar = () => {
             ))}
 
           <Link 
-            className={` "mt-5" group flex items-center text-sm  gap-3.5 font-medium p-2  hover:border-l-4 border-pink-700 hover:bg-pink-400 rounded-md`}
+            className={` "mt-5" group flex items-center text-sm  gap-3.5 font-medium p-2  hover:border-l-4 border-[#ff5360] hover:bg-[#f1bcbf] rounded-md`}
             onClick={()=>handleSignout()}
           >
             <div>

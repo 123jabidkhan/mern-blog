@@ -127,7 +127,7 @@ export default function CommentSection({ postId }) {
           />
           <Link
             to={'/dashboard?tab=profile'}
-            className='text-xs text-cyan-600 hover:underline'
+            className='text-xs text-[#ff5360] hover:underline'
           >
             @{currentUser.username}
           </Link>
@@ -135,7 +135,7 @@ export default function CommentSection({ postId }) {
       ) : (
         <div className='text-sm text-teal-500 my-5 flex gap-1'>
           You must be signed in to comment.
-          <Link className='text-pink-500 hover:underline' to={'/sign-in'}>
+          <Link className='text-[#ff5360] hover:underline' to={'/sign-in'}>
             Sign In
           </Link>
         </div>
@@ -156,8 +156,8 @@ export default function CommentSection({ postId }) {
             <p className='text-gray-500 text-xs'>
               {200 - comment.length} characters remaining
             </p>
-            <Button outline color='pink' type='submit'>
-              Submit
+            <Button outline style={{background:"#ff5360"}} type='submit'>
+              Send
             </Button>
           </div>
           {commentError && (

@@ -73,7 +73,7 @@ export default function Home() {
               </div>
               <Link
                 to={"/search"}
-                className="text-lg text-pink-500 hover:underline text-center"
+                className="text-lg text-[#ff5360] mt-10 hover:underline text-center"
               >
                 View all posts
               </Link>
