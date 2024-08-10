@@ -1,63 +1,84 @@
-import { Link } from 'react-router-dom';
-// import CallToAction from '../components/CallToAction';
-import { useEffect, useState } from 'react';
-import PostCard from '../components/PostCard';
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import PostCard from "../components/PostCard";
+import heroImg from "../assets/images/hero.svg";
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await fetch('/api/post/getPosts');
+      const res = await fetch("/api/post/getPosts");
       const data = await res.json();
       setPosts(data.posts);
     };
     fetchPosts();
+    
   }, []);
+ 
   return (
-    <div>
-      {/* <div className='flex flex-col gap-6 p-28 px-3 max-w-6xl mx-auto '>
-        <h1 className='text-3xl font-bold lg:text-6xl'>Welcome to my Blog</h1>
-        <p className='text-gray-500 text-xs sm:text-sm'>
-          Here you`ll find a variety of articles and tutorials on topics such as
-          web development, software engineering, and programming languages.
-        </p>
-        <Link
-          to='/search'
-          className='text-xs sm:text-sm text-pink-500 font-bold hover:underline'
-        >
-          View all posts
-        </Link>
-      </div> */}
-      <div className='max-w-[1640px] mx-auto '>
-        <div className='max-h-[500px] relative'>
-            {/* Overlay */}
-            <div className='absolute w-full h-full text-gray-200 max-h-[500px] bg-black/40 flex flex-col justify-center'>
-                <h1 className='px-4 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold'>The <span className='text-pink-800'>Best</span></h1>
-                <h1 className='px-4 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold'> <span className='text-pink-800'>Foods</span> Devlivered</h1>
-            </div>
-            <img className='w-full max-h-[500px] object-cover' src="https://img.freepik.com/free-photo/beautiful-office-space-cartoon-style_23-2151043299.jpg?t=st=1722943770~exp=1722947370~hmac=99e0bda52aa324624f00801fe256a968fc99041ca4f0a841ed47e509f2c77440&w=740" alt="/" />
-        </div>
-    </div>
+    <>
+      {/* langing page */}
+      <section className="main">
+        <section className="left">
+          <p className="title">
+            Welcome to Blog Hub <br />{" "}
+            <span className="text-green-500 text-[22px] ">
+              Where Ideas Come to Life
+            </span>
+          </p>
+          <p className="msg">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex nihil
+            rerum itaque quisquam! Natus repudiandae nesciunt tempora odio amet.
+            Saepe?
+          </p>
 
-      <div className='max-w mx-auto px-5 flex flex-col gap-4'>
-        {posts && posts.length > 0 && (
-          <div className='flex flex-col gap-3'>
-            <h2 className='text-2xl font-semibold text-center my-5'>Recent Posts</h2>
-            <div className='flex flex-wrap gap-2'>
-              {posts.map((post) => (
-                <PostCard key={post._id} post={post} />
-              ))}
-            </div>
-            <Link
-              to={'/search'}
-              className='text-lg text-pink-500 hover:underline text-center'
+          <span className="inline-block mr-2 mb-2">
+            <a
+              href=""
+              className="px-8 py-3 text-white uppercase tracking-wide no-underline text-sm font-semibold rounded shadow inline-block py-4 px-4 animate-bounce focus:animate-none hover:animate-none bg-[#ff5360] "
             >
-              View all posts
-            </Link>
-          </div>
-        )}
+              Create Post
+            </a>
+          </span>
+          <span className="inline-block mr-2 mb-2">
+            <a
+              href=""
+              className="px-10 py-3 text-white uppercase tracking-wide no-underline text-sm font-semibold rounded shadow inline-block py-4 px-8 animate-bounce focus:animate-none hover:animate-none bg-green-400 "
+            >
+              All Posts
+            </a>
+          </span>
+        </section>
+
+        <section className="right">
+          <img src={heroImg} alt="Langing image" />
+        </section>
+      </section>
+
+      {/* ................ */}
+      <div>
+        <div className="max-w mx-auto px-5 flex flex-col gap-4">
+          {posts && posts.length > 0 && (
+            <div className="flex flex-col gap-3 sm:mx-auto">
+              <h2 className="text-2xl font-semibold text-center my-5">
+                Recent Posts
+              </h2>
+              <div className="flex flex-wrap gap-2">
+                {posts.map((post) => (
+                  <PostCard key={post._id} post={post} />
+                ))}
+              </div>
+              <Link
+                to={"/search"}
+                className="text-lg text-pink-500 hover:underline text-center"
+              >
+                View all posts
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
