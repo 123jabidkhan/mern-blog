@@ -2,9 +2,11 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PostCard from "../components/PostCard";
 import heroImg from "../assets/images/hero.svg";
+import { useSelector } from 'react-redux';
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
+  const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -23,31 +25,31 @@ export default function Home() {
         <section className="left">
           <p className="title">
             Welcome to Blog Hub <br />{" "}
-            <span className="text-green-500 text-[22px] ">
-              Where Ideas Come to Life
-            </span>
+            
           </p>
+          <span className="text-green-500 text-[20px]">
+              Where Ideas Come To Life
+            </span>
           <p className="msg">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex nihil
-            rerum itaque quisquam! Natus repudiandae nesciunt tempora odio amet.
-            Saepe?
+          you`ll discover a variety of content that speaks to your
+           interests. Join us on this journey of exploration and connection.
           </p>
 
           <span className="inline-block mr-2 mb-2">
-            <a
-              href=""
+            <Link
+              to={!currentUser ? '/sign-in' : '/create-post'}
               className="px-8 py-3 text-white uppercase tracking-wide no-underline text-sm font-semibold rounded shadow inline-block py-4 px-4 animate-bounce focus:animate-none hover:animate-none bg-[#ff5360] "
             >
               Create Post
-            </a>
+            </Link>
           </span>
           <span className="inline-block mr-2 mb-2">
-            <a
-              href=""
+            <Link
+              to={!currentUser ? '/sign-in' : 'dashboard?tab=posts'}
               className="px-10 py-3 text-white uppercase tracking-wide no-underline text-sm font-semibold rounded shadow inline-block py-4 px-8 animate-bounce focus:animate-none hover:animate-none bg-green-400 "
             >
               All Posts
-            </a>
+            </Link>
           </span>
         </section>
 
@@ -58,9 +60,9 @@ export default function Home() {
 
       {/* ................ */}
       <div>
-        <div className="max-w mx-auto px-5 flex flex-col gap-4">
+        <div className="max-w mx-auto px-5 flex flex-col">
           {posts && posts.length > 0 && (
-            <div className="flex flex-col gap-3 sm:mx-auto">
+            <div className="flex flex-col sm:mx-auto">
               <h2 className="text-2xl font-semibold text-center my-5">
                 Recent Posts
               </h2>

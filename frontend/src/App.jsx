@@ -8,7 +8,6 @@ import Header from "./components/Header";
 import Projects from "./pages/Projects";
 import FooterCom from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
-import AdminPrivateRoute from "./components/AdminPrivateRoute";
 import CreatePost from "./pages/CreatePost";
 import UpdatePost from "./pages/UpdatePost";
 import PostPage from "./pages/PostPage";

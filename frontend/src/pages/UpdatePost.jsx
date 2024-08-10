@@ -113,7 +113,6 @@ export default function UpdatePost() {
       <h1 className='text-center text-3xl my-7 font-semibold'> </h1>
       <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
         <div className='flex flex-col gap-4 sm:flex-row justify-between'>
-        {formData.title}
           <TextInput
             type='text'
             placeholder='Title'
