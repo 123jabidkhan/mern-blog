@@ -143,7 +143,7 @@
 
 // new signup design..
 import { useState } from "react";
-import { Spinner } from "flowbite-react";
+import { Spinner, Button } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -215,6 +215,9 @@ const SignUp = () => {
             <p className="text-xl  font-bold my-4">
               Sign up to share your thoughts, follow your favorite authors, and never miss an update.
             </p>
+            <Link to='/'>
+            <Button color='failure'>Latest article</Button>
+            </Link>
           </div>
         </div>
         <div

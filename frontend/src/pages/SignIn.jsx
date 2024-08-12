@@ -140,7 +140,7 @@
 // new signin design..
 import loginBg from "../assets/images/loginBg.jpg";
 import { useState } from "react";
-import {  Spinner } from "flowbite-react";
+import {  Spinner, Button } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch,useSelector } from "react-redux";
@@ -208,6 +208,9 @@ const SignIn = () => {
             <p className="text-xl  font-bold my-4">
               Access your personalized content, save your favorite posts, and join the conversation by Signing in
             </p>
+            <Link to='/'>
+            <Button color='failure'>Latest article</Button>
+            </Link>
           </div>
         </div>
         <div
