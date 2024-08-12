@@ -202,17 +202,17 @@ const SignUp = () => {
   };
   return (
     <>
-      <section className="min-h-screen flex items-stretch text-white ">
+      <section className="min-h-screen flex items-stretch text-white p-5 ">
         <div
           className="lg:flex w-1/2 hidden bg-gray-500 bg-no-repeat bg-cover relative items-center"
           style={backgroundImage}
         >
           <div className="absolute bg-[#008a008f] opacity-90 inset-0 z-0"></div>
           <div className="w-full px-24 z-10">
-            <h1 className="text-5xl font-bold text-left tracking-wide">
-              Keep it special
+            <h1 className="text-5xl font-extrabold text-left tracking-wide">
+              Welcome To BlogHub
             </h1>
-            <p className="text-3xl  font-bold my-4">
+            <p className="text-xl  font-bold my-4">
               Sign up to share your thoughts, follow your favorite authors, and never miss an update.
             </p>
           </div>
@@ -232,7 +232,7 @@ const SignUp = () => {
                 Sign Up
               </h1><br />
 
-            <p className="text-gray-100 ">
+            <p className="text-gray-100 text-sm text-black dark:text-white">
               Hey enter your details to create your account
             </p>
             <form

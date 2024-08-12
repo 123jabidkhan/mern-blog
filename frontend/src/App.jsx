@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useLocation,BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Dashboard from "./pages/Dashboard";
@@ -13,11 +13,13 @@ import UpdatePost from "./pages/UpdatePost";
 import PostPage from "./pages/PostPage";
 import ScrollToTop from "./components/ScrollToTop";
 const App = () => {
+  const location = useLocation();
+  const hideHeaderFooter = location.pathname === '/sign-up' || location.pathname === '/sign-in';
   return (
     <>
-      <BrowserRouter>
+      
       <ScrollToTop/>
-        <Header />
+      {!hideHeaderFooter && <Header />}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -36,8 +38,7 @@ const App = () => {
           <Route path="/sign-up" element={<SignUp />} />
         </Routes>
         <br />
-        <FooterCom />
-      </BrowserRouter>
+        {!hideHeaderFooter && <FooterCom />}
     </>
   );
 };
