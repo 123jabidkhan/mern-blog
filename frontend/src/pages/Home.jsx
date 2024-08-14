@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PostCard from "../components/PostCard";
 import heroImg from "../assets/images/hero.svg";
-import { useSelector } from 'react-redux';
-
-export default function Home() {
+import { useSelector } from "react-redux";
+import { Typewriter } from "react-simple-typewriter";
+const Home = () => {
   const [posts, setPosts] = useState([]);
   const { currentUser } = useSelector((state) => state.user);
 
@@ -15,38 +15,60 @@ export default function Home() {
       setPosts(data.posts);
     };
     fetchPosts();
-    
   }, []);
- 
+
   return (
     <>
       {/* langing page */}
       <section className="main">
         <section className="left">
-          <p className="title">
-            Welcome to Blog Hub <br />{" "}
-            
-          </p>
-          <span className="text-green-500 text-[20px]">
-              Where Ideas Come To Life
-            </span>
+          <p className="title">Welcome to BlogHub </p>
+          <div className="typingEffect h-20">
+            <div className="typeWriter">
+              <h1
+                style={{
+                  margin: "auto 0",
+                  fontWeight: "normal",
+                  fontSize: "20px",
+                }}
+              >
+                <span style={{ fontWeight: "bold" }}>
+                  {/* Style will be inherited from the parent element */}
+                  <Typewriter
+                    words={[
+                      "Innovation starts here—let’s explore the future together!",
+                      "Your journey to mastering tech begins now!",
+                      "Transform your knowledge and skills with our insightful articles.",
+                    ]}
+                    loop={10}
+                    cursor
+                    cursorStyle="_"
+                    typeSpeed={70}
+                    deleteSpeed={10}
+                    delaySpeed={1000}
+                  />
+                </span>
+              </h1>
+            </div>
+          </div>
           <p className="msg">
-          you`ll discover a variety of content that speaks to your
-           interests. Join us on this journey of exploration and connection.
+            Welcome to our bloghub! Dive into the latest trends, tutorials,
+            and expert insights. Discover how technology is shaping the future
+            and stay ahead in the field.
           </p>
 
-          <span className="inline-block mr-2 mb-2">
+          <span className="inline mr-2">
             <Link
-              to={!currentUser ? '/sign-in' : '/create-post'}
-              className="px-8 py-3 text-white uppercase tracking-wide no-underline text-sm font-semibold rounded shadow inline-block py-4 px-4 animate-bounce focus:animate-none hover:animate-none bg-[#ff5360] "
+              to={!currentUser ? "/sign-in" : "/create-post"}
+              className="px-8 py-3 text-white uppercase tracking-wide no-underline text-sm font-semibold rounded shadow inline-block px-4 animate-bounce focus:animate-none hover:animate-none bg-[#ff5360] "
             >
               Create Post
             </Link>
           </span>
-          <span className="inline-block mr-2 mb-2">
+          <span className="inline mr-2">
             <Link
-              to={!currentUser ? '/sign-in' : 'dashboard?tab=posts'}
-              className="px-10 py-3 text-white uppercase tracking-wide no-underline text-sm font-semibold rounded shadow inline-block py-4 px-8 animate-bounce focus:animate-none hover:animate-none bg-green-400 "
+              to={!currentUser ? "/sign-in" : "dashboard?tab=posts"}
+              className="px-10 py-3 text-white uppercase tracking-wide no-underline text-sm font-semibold rounded shadow inline-block px-8 animate-bounce focus:animate-none hover:animate-none bg-green-400 "
             >
               All Posts
             </Link>
@@ -83,4 +105,5 @@ export default function Home() {
       </div>
     </>
   );
-}
+};
+export default Home;
