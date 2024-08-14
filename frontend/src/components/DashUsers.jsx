@@ -5,9 +5,8 @@ import {
   HiOutlineExclamationCircle,
   HiOutlineTrash,
   HiCheck,
-  HiOutlineX
+  HiOutlineX,
 } from "react-icons/hi";
-// import { set } from 'mongoose';
 
 const DashUsers = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -15,6 +14,11 @@ const DashUsers = () => {
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
+  const [userId, setUserId] = useState("");
+  const [userStatus, setUserStatus] = useState("");
+  // State for controlling modal visibility
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isUserStatusChangeModal, setIsUserStatusChangeModal] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -36,6 +40,15 @@ const DashUsers = () => {
     }
   }, [currentUser._id]);
 
+  // Functions to open and close modals
+  const openDeleteUsersModal = () => setIsDeleteModalOpen(true);
+
+  const openStatusChangeModal = (uid, currentStatus) => {
+    setUserId(uid);
+    setUserStatus(currentStatus);
+    setIsUserStatusChangeModal(true);
+  };
+
   //   row selected
   const handleSelectRow = (id) => {
     setSelectedRows((prevSelectedRows) =>
@@ -55,47 +68,78 @@ const DashUsers = () => {
     setSelectedRows([]);
   };
 
-//   Delete posts byIDS
-    const handleDeletePost = async () => {
-      setShowModal(false);
-      try{
-        const res = await fetch(`/api/user/deleteUsers/`, {
-          method: "DELETE",
-          headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ ids: selectedRows }),
-        });
-        const data = await res.json();
-        if(!res.ok){
-          console.log(data.message);
-        }else{
-          setUsers((prev) =>
-            prev.filter((post) => !selectedRows.includes(post._id)));
-          setSelectedRows([])
+  //   Delete posts byIDS
+  const handleDeletePost = async () => {
+    setIsDeleteModalOpen(false);
+    try {
+      const res = await fetch(`/api/user/deleteUsers/`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ids: selectedRows }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        setUsers((prev) =>
+          prev.filter((post) => !selectedRows.includes(post._id))
+        );
+        setSelectedRows([]);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const handleShowMore = async () => {
+    const startIndex = users.length;
+    try {
+      const res = await fetch(`/api/user/getusers?startIndex=${startIndex}`);
+      const data = await res.json();
+      if (res.ok) {
+        setUsers((prev) => [...prev, ...data.users]);
+        if (data.users.length < 9) {
+          setShowMore(false);
         }
       }
-      catch(error){
-        console.log(error.message);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const handleUserStatusChnage = async () => {
+    setIsUserStatusChangeModal(false);
+    try {
+      const res = await fetch(`/api/user/update/${userId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ isAdmin: !userStatus }),
+      });
+      const data = await res.json();
+      console.log("updated user >>", data);
+      if (!res.ok) {
+        console.log("Something went wrong while status update >", data.message);
+      } else {
+        console.log("user status update successfully!");
+        setUsers(prevUsers => 
+          prevUsers.map(user =>
+            user._id === userId ? {...user, isAdmin:!userStatus} : user
+          )
+        );
+         
       }
+    } catch (error) {
+      console.log(
+        "something went wrong while update user status ",
+        error.message
+      );
+    }
+  };
 
-    };
-
-    const handleShowMore = async () => {
-        const startIndex = users.length;
-        try {
-          const res = await fetch(`/api/user/getusers?startIndex=${startIndex}`);
-          const data = await res.json();
-          if (res.ok) {
-            setUsers((prev) => [...prev, ...data.users]);
-            if (data.users.length < 9) {
-              setShowMore(false);
-            }
-          }
-        } catch (error) {
-          console.log(error.message);
-        }
-      };
   return (
     <div className="w-full table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
       {currentUser.isAdmin && users.length > 0 ? (
@@ -113,7 +157,7 @@ const DashUsers = () => {
                     className="w-6 h-6 text-[red] transition-transform duration-200 ease-in-out hover:scale-125 mt-2"
                     size="23"
                     onClick={() => {
-                      setShowModal(true);
+                      openDeleteUsersModal(true);
                     }}
                   />
                 </div>
@@ -123,7 +167,6 @@ const DashUsers = () => {
                 All Users : ( {users.length} )
               </span>
             )}
-           
           </div>
           <Table hoverable className="shadow-xl h-['100vh']">
             <Table.Head>
@@ -142,10 +185,11 @@ const DashUsers = () => {
                 />
               </Table.HeadCell>
               <Table.HeadCell> Created At </Table.HeadCell>
-              <Table.HeadCell>  Profile Image</Table.HeadCell>
+              <Table.HeadCell> Profile Image</Table.HeadCell>
               <Table.HeadCell> Username</Table.HeadCell>
               <Table.HeadCell> Email Id</Table.HeadCell>
-              <Table.HeadCell> Admin </Table.HeadCell>
+              <Table.HeadCell> Admin Status </Table.HeadCell>
+              <Table.HeadCell> Actions </Table.HeadCell>
             </Table.Head>
             {users.map((row) => (
               <Table.Body className="divide-y" key={row._id}>
@@ -161,32 +205,60 @@ const DashUsers = () => {
                     {new Date(row.createdAt).toLocaleDateString()}
                   </Table.Cell>
                   <Table.Cell>
-                      <img
-                        src={row.profilePicture}
-                        alt={row.username}
-                        className="w-5 h-5 object-cover bg-gray-500 rounded-full"
-                      />
+                    <img
+                      src={row.profilePicture}
+                      alt={row.username}
+                      className="w-5 h-5 object-cover bg-gray-500 rounded-full"
+                    />
                   </Table.Cell>
                   <Table.Cell className="font-medium text-gray-900 dark:text-white">
-                      {row.username}
+                    {row.username}
                   </Table.Cell>
                   <Table.Cell className="font-medium text-gray-900 dark:text-white">
-                    {/* <Link
-                      className="font-medium text-gray-900 dark:text-white"
-                    > */}
-                      {row.email}
-                    {/* </Link> */}
+                    {row.email}
                   </Table.Cell>
                   <Table.Cell>
-                  {row.isAdmin ? <HiCheck className='text-green-500' size='25' /> : <HiOutlineX className='text-red-500' size='25'  />}
+                    {row.isAdmin ? (
+                      <HiCheck className="text-green-400" size="25" />
+                    ) : (
+                      <HiOutlineX className="text-red-500" size="25" />
+                    )}
                   </Table.Cell>
-                 
+
+                  {/* admin acces enable or disable */}
+                  <Table.Cell>
+                  {
+                    row?.isAdmin ? 
+                    <Button
+                        className='w-35'
+                        color='success' 
+                        onClick={() =>
+                          openStatusChangeModal(row._id, row.isAdmin)
+                        }
+                  >
+                 Revoke Admin
+                  </Button> : 
+                   <Button
+                        className='w-35 px-2'
+                        color='failure'
+                          onClick={() =>
+                          openStatusChangeModal(row._id, row.isAdmin)
+                        }
+                  >
+                Grant Admin
+                  </Button>
+                  }
+                
+                  </Table.Cell>
                 </Table.Row>
               </Table.Body>
             ))}
           </Table>
           {showMore && (
-            <button onClick={handleShowMore} className="w-full text-[#ff5360] self-center text-sm py-7">
+            <button
+              onClick={handleShowMore}
+              className="w-full text-[#ff5360] self-center text-sm py-7"
+            >
               Show more
             </button>
           )}
@@ -194,9 +266,10 @@ const DashUsers = () => {
       ) : (
         <p className="text-xl">You have no users yet!</p>
       )}
+      {/* delete modal */}
       <Modal
-        show={showModal}
-        onClose={() => setShowModal(false)}
+        show={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
         popup
         size="sm"
       >
@@ -205,13 +278,45 @@ const DashUsers = () => {
           <div className="text-center">
             <HiOutlineExclamationCircle className="h-5 w-5 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
             <h3 className="mb-3 text-lg text-gray-500 dark:text-gray-400">
-              Are you sure you want to delete this post?
+              Are you sure you want to delete this user?
             </h3>
             <div className="flex justify-center gap-4">
               <Button gradientMonochrome="failure" onClick={handleDeletePost}>
                 Yes, I`m sure
               </Button>
-              <Button color="gray" onClick={() => setShowModal(false)}>
+              <Button color="gray" onClick={() => setIsDeleteModalOpen(false)}>
+                No, cancel
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      {/* user status modal */}
+      <Modal
+        show={isUserStatusChangeModal}
+        onClose={() => setIsUserStatusChangeModal(false)}
+        popup
+        size="sm"
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center">
+            <HiOutlineExclamationCircle className="h-5 w-5 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
+            <h3 className="mb-3 text-lg text-gray-500 dark:text-gray-400">
+              Do You want change the user status ?
+            </h3>
+            <div className="flex justify-center gap-4">
+              <Button
+                gradientMonochrome="failure"
+                onClick={handleUserStatusChnage}
+              >
+                Yes, I`m sure
+              </Button>
+              <Button
+                color="gray"
+                onClick={() => setIsUserStatusChangeModal(false)}
+              >
                 No, cancel
               </Button>
             </div>

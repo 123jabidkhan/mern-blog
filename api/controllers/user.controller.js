@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 
 // update user api
  const updateUser = async (req, res, next) => {
-    if (req.user.id !== req.params.userId) {
+    if (!req.user.id) {
       return next(errorHandler(403, 'You are not allowed to update this user'));
     }
     if (req.body.password) {
@@ -31,6 +31,7 @@ import bcrypt from 'bcrypt';
         );
       }
     }
+    
     try {
       const userUpdate = await User.findByIdAndUpdate(
         req.params.userId,
@@ -40,6 +41,7 @@ import bcrypt from 'bcrypt';
             email: req.body.email,
             profilePicture: req.body.profilePicture,
             password: req.body.password,
+            isAdmin:req.body.isAdmin,
           },
         },
         { new: true }
@@ -89,7 +91,7 @@ import bcrypt from 'bcrypt';
     }
     try {
       const startIndex = parseInt(req.query.startIndex) || 0;
-      const limit = parseInt(req.query.limit) || 9;
+      const limit = parseInt(req.query.limit) || 5;
       const sortDirection = req.query.sort === 'asc' ? 1 : -1;
   
       const users = await User.find()
