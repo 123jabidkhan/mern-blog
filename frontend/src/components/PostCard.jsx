@@ -22,7 +22,7 @@ const PostCard = ({ post, className }) => {
       }
     };
     getUser();
-  })
+  },[])
   return (
     <div className="group relative w-full shadow-md shadow-[#ff7b86]  overflow-hidden rounded-lg sm:w-[430px] transition-all">
       {/* <Link to={`/blog/${post.slug}`}> */}
