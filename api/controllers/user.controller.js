@@ -83,50 +83,47 @@ import bcrypt from 'bcrypt';
   };
 
   // get all users
-  const getUsers = async (req, res, next)=>{
-    if (!req.user.isAdmin && req.user.id !== req.params.userId) {
-      return next(errorHandler(403, 'You are not allowed to delete this user'));
+   const getUsers = async (req, res, next) => {
+    if (!req.user.isAdmin) {
+      return next(errorHandler(403, 'You are not allowed to see all users'));
     }
-    try{
+    try {
       const startIndex = parseInt(req.query.startIndex) || 0;
-    const limit = parseInt(req.query.limit) || 5;
-    const sortDirection = req.query.sort === 'asc' ? 1 : -1;
-
-      const users = await User.find({})
-      .sort({ createdAt: sortDirection })
-      .skip(startIndex)
-      .limit(limit);
-
+      const limit = parseInt(req.query.limit) || 9;
+      const sortDirection = req.query.sort === 'asc' ? 1 : -1;
+  
+      const users = await User.find()
+        .sort({ createdAt: sortDirection })
+        .skip(startIndex)
+        .limit(limit);
+  
       const usersWithoutPassword = users.map((user) => {
         const { password, ...rest } = user._doc;
         return rest;
       });
-
-      // total count 
+  
       const totalUsers = await User.countDocuments();
-
-    const now = new Date();
-
-    const oneMonthAgo = new Date(
-      now.getFullYear(),
-      now.getMonth() - 1,
-      now.getDate()
-    );
-
-    // last month registered users
-    const lastMonthUsers = await User.countDocuments({
-      createdAt: { $gte: oneMonthAgo },
-    });
-
+  
+      const now = new Date();
+  
+      const oneMonthAgo = new Date(
+        now.getFullYear(),
+        now.getMonth() - 1,
+        now.getDate()
+      );
+      const lastMonthUsers = await User.countDocuments({
+        createdAt: { $gte: oneMonthAgo },
+      });
+  
       res.status(200).json({
-        users:usersWithoutPassword,
+        users: usersWithoutPassword,
         totalUsers,
-        lastMonthUsers
-      })
-    }catch(error){
+        lastMonthUsers,
+      });
+    } catch (error) {
       next(error);
     }
-  }
+  };
    
   // get user by ID
   const getUser = async (req, res, next) => {

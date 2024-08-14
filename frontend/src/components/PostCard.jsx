@@ -1,11 +1,28 @@
 import { BsCheckLg } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 import { Button } from "flowbite-react";
-
+import { useSelector } from "react-redux";
 // import { images, stables } from "../constants";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const PostCard = ({ post, className }) => {
+  const [user, setUser] = useState({});
+
+  useEffect(()=>{
+    const getUser = async () => {
+      try {
+        const res = await fetch(`/api/user/${post.userId}`);
+        const data = await res.json();
+        if (res.ok) {
+          setUser(data);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    getUser();
+  })
   return (
     <div className="group relative w-full shadow-md shadow-[#ff7b86]  overflow-hidden rounded-lg sm:w-[430px] transition-all">
       {/* <Link to={`/blog/${post.slug}`}> */}
@@ -30,7 +47,7 @@ const PostCard = ({ post, className }) => {
             />
             <div className="flex flex-col">
               <h4 className="font-bold italic text-dark-soft text-sm md:text-base text-[#ff5360]">
-                jabidkhan
+                {user.username}
               </h4>
               <div className="flex items-center gap-x-2"></div>
             </div>

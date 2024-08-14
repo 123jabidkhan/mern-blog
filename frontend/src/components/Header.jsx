@@ -79,9 +79,6 @@ const Header = () => {
             <Link to={"/dashboard?tab=profile"}>
               <Dropdown.Item>Profile</Dropdown.Item>
             </Link>
-            <Link to={"/dashboard?tab=dash"}>
-              <Dropdown.Item>Dashboard</Dropdown.Item>
-            </Link>
             <Dropdown.Divider />
 
           
@@ -123,7 +120,7 @@ const Header = () => {
           </Link>
         </Navbar.Link>
         {
-          currentUser && (
+          ( currentUser && currentUser?.isAdmin) && (
             <Navbar.Link active={path === "/projects"} as={"div"}>
           <Link to="/dashboard?tab=dash" className="hover:text-[#ff5360]">
             Dashboard
