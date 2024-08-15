@@ -12,6 +12,7 @@ import UpdatePost from "./pages/UpdatePost";
 import PostPage from "./pages/PostPage";
 import ScrollToTop from "./components/ScrollToTop";
 import PageNotFound from "./pages/PageNotFound";
+import Search from "./pages/Search";
 const App = () => {
   const location = useLocation();
   const hideHeaderFooter = location.pathname === '/sign-up' || location.pathname === '/sign-in';
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/post/:postSlug" element={<PostPage/>} />
+          <Route path="/search" element={<Search/>} />
           {/* Dashboard private */}
           <Route element={<PrivateRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />

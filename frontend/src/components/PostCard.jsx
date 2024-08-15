@@ -24,7 +24,7 @@ const PostCard = ({ post, className }) => {
     getUser();
   },[])
   return (
-    <div className="group relative w-full shadow-md shadow-[#ff7b86]  overflow-hidden rounded-lg sm:w-[430px] transition-all">
+    <div className="group relative w-full shadow-md shadow-[#ff7b86]  overflow-hidden rounded-lg sm:w-[420px] transition-all">
       {/* <Link to={`/blog/${post.slug}`}> */}
       <img
         src={post.image}
@@ -34,14 +34,14 @@ const PostCard = ({ post, className }) => {
       {/* </Link> */}
       <div className="p-5">
         {/* <Link to={`/blog/${post.slug}`}> */}
-        <h2 className=" font-roboto font-bold text-dark-soft md:text-2xl lg:text-[28px] h-20">
+        <h2 className=" font-roboto font-bold text-dark-soft md:text-2xl lg:text-[20px] h-20">
           {post.title}
         </h2>
         {/* </Link> */}
         <div className="flex justify-between flex-nowrap items-center mt-6">
           <div className="flex items-center gap-x-2 md:gap-x-2.5">
             <img
-              src={post.image}
+              src={user.profilePicture}
               alt="post profile"
               className="w-9 h-9 md:w-10 md:h-10 rounded-full"
             />

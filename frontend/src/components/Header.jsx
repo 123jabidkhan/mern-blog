@@ -1,5 +1,6 @@
 import { Button, TextInput, Navbar, Avatar } from "flowbite-react";
-import { Link, useLocation } from "react-router-dom";
+import {useState, useEffect} from 'react';
+import { Link, useLocation , useNavigate} from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaSun, FaMoon } from "react-icons/fa";
 import { Dropdown } from "flowbite-react";
@@ -10,10 +11,21 @@ import {signoutSuccess} from '../redux/user/userSlice';
 
 const Header = () => {
   const path = useLocation().pathname;
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const { currentUser } = useSelector((state) => state.user);
   const { theme } = useSelector((state) => state.theme);
   const dispatch = useDispatch();
+  const [searchTerm, setSearchTerm] = useState('');
 
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const searchTermFromUrl = urlParams.get('searchTerm');
+    if (searchTermFromUrl) {
+      setSearchTerm(searchTermFromUrl);
+    }
+  }, [location.search]);
   const handleSignout = async () => {
     try {
       const res = await fetch('/api/user/signout', {
@@ -29,6 +41,20 @@ const Header = () => {
       console.log(error.message);
     }
   };
+  // when user keydown "enter" event call handleSubmit()
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      handleSubmit();
+    }
+  };
+  // when user click on search button handleSubmit() call
+  const handleSubmit = () => {
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set('searchTerm', searchTerm);
+    const searchQuery = urlParams.toString();
+    navigate(`/search?${searchQuery}`);
+  };
   return (
     <Navbar className="border-b-2">
       <Link
@@ -40,16 +66,18 @@ const Header = () => {
           &nbsp;&nbsp;&nbsp;&nbsp;
         </span>
       </Link>
-      <form>
+      <form className="flex xs:hidden">
         <TextInput
           type="text"
           placeholder="Search..."
-          rightIcon={AiOutlineSearch}
           className="hidden lg:inline"
+          value={searchTerm}
+          onKeyDown={handleKeyDown}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
+        <AiOutlineSearch onClick={handleSubmit} className="w-8 h-8 mt-1 -ml-10 z-10 cursor-pointer text-[#ff5360] transition-transform duration-200 ease-in-out hover:scale-125 xs:hidden" />
       </form>
       {/* <Button  color="gray" pill> */}
-        <AiOutlineSearch className="w-8 h-8 mr-10 text-[#ff5360] transition-transform duration-200 ease-in-out hover:scale-125 lg:hidden" />
       {/* </Button> */}
 
       <div className="flex gap-2 md:order-1">
