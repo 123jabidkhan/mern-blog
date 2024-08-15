@@ -63,7 +63,7 @@ const Header = () => {
         </Button>
         {currentUser ? (
           <Dropdown
-            arrowIcon={true}
+            arrowIcon={false}
             inline
             label={
               <Avatar alt="user" img={currentUser.profilePicture} rounded />
@@ -79,18 +79,18 @@ const Header = () => {
             <Link to={"/dashboard?tab=profile"}>
               <Dropdown.Item>Profile</Dropdown.Item>
             </Link>
-            <Dropdown.Divider />
 
-          
+            <Link  to="/dashboard?tab=dash" className="hover:text-[#ff5360] lg:hidden md:hidden">
+            <Dropdown.Item>Dashboard</Dropdown.Item>
+          </Link>
+            <Dropdown.Divider />
             <Link  to="/" className="hover:text-[#ff5360] lg:hidden md:hidden">
             <Dropdown.Item>Home</Dropdown.Item>
           </Link>
           <Link  to="/about" className="hover:text-[#ff5360] lg:hidden md:hidden">
             <Dropdown.Item>About</Dropdown.Item>
           </Link>
-          <Link  to="/projects" className="hover:text-[#ff5360] lg:hidden md:hidden">
-            <Dropdown.Item>Projects</Dropdown.Item>
-          </Link>
+         
             <Dropdown.Item icon={HiLockClosed} onClick={handleSignout}>Sign out</Dropdown.Item>
           </Dropdown>
         ) : (
@@ -112,11 +112,6 @@ const Header = () => {
         <Navbar.Link active={path === "/about"} as={"div"}>
           <Link to="/about" className="hover:text-[#ff5360]">
             About
-          </Link>
-        </Navbar.Link>
-        <Navbar.Link active={path === "/projects"} as={"div"}>
-          <Link to="/projects" className="hover:text-[#ff5360]">
-            Projects
           </Link>
         </Navbar.Link>
         {
