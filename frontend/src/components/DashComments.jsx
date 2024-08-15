@@ -176,8 +176,8 @@ const DashComments = () => {
               </Table.Body>
             ))}
           </Table>
-          {showMore.length > 5 && (
-            <button onClick={handleShowMore} className="w-full text-[#ff5360] self-center text-sm py-7">
+          {showMore && (
+            <button onClick={handleShowMore} className="w-full text-[#ff5360] self-center text-sm py-7 ">
               Show more
             </button>
           )}
