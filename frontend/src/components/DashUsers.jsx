@@ -1,4 +1,4 @@
-import { Modal, Table, Button, Checkbox } from "flowbite-react";
+import { Modal, Table, Button, Checkbox, Spinner } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
@@ -12,18 +12,18 @@ const DashUsers = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [users, setUsers] = useState([]);
   const [showMore, setShowMore] = useState(true);
-  const [showModal, setShowModal] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
   const [userId, setUserId] = useState("");
   const [userStatus, setUserStatus] = useState("");
   // State for controlling modal visibility
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isUserStatusChangeModal, setIsUserStatusChangeModal] = useState(false);
-
+  const [loading, setLoading] = useState(false);
+  const [loadingIds, setLoadingIds] = useState([]);
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch(`/api/user/getusers`);
+        const res = await fetch(`/api/user/getusers/`);
         const data = await res.json();
         if (res.ok) {
           setUsers(data.users);
@@ -38,7 +38,7 @@ const DashUsers = () => {
     if (currentUser.isAdmin) {
       fetchUsers();
     }
-  }, [currentUser._id]);
+  }, []);
 
   // Functions to open and close modals
   const openDeleteUsersModal = () => setIsDeleteModalOpen(true);
@@ -111,6 +111,8 @@ const DashUsers = () => {
 
   const handleUserStatusChnage = async () => {
     setIsUserStatusChangeModal(false);
+    setLoading(true);
+    setLoadingIds((prev) => [...prev, userId]);
     try {
       const res = await fetch(`/api/user/update/${userId}`, {
         method: "PUT",
@@ -122,15 +124,19 @@ const DashUsers = () => {
       const data = await res.json();
       console.log("updated user >>", data);
       if (!res.ok) {
+        setLoading(false);
         console.log("Something went wrong while status update >", data.message);
       } else {
+        setTimeout(() => {
+          setLoading(false);
+          setLoadingIds((prev) => prev.filter((id) => id !== userId));
+          setUsers((prevUsers) =>
+            prevUsers.map((user) =>
+              user._id === userId ? { ...user, isAdmin: !userStatus } : user
+            )
+          );
+        }, 3000);
         console.log("user status update successfully!");
-        setUsers(prevUsers => 
-          prevUsers.map(user =>
-            user._id === userId ? {...user, isAdmin:!userStatus} : user
-          )
-        );
-         
       }
     } catch (error) {
       console.log(
@@ -227,28 +233,41 @@ const DashUsers = () => {
 
                   {/* admin acces enable or disable */}
                   <Table.Cell>
-                  {
-                    row?.isAdmin ? 
-                    <Button
-                        className='w-35'
-                        color='success' 
+                    {row?.isAdmin ? (
+                      <Button
+                        className="w-35"
+                        color="success"
                         onClick={() =>
                           openStatusChangeModal(row._id, row.isAdmin)
                         }
-                  >
-                 Revoke Admin
-                  </Button> : 
-                   <Button
-                        className='w-35 px-2'
-                        color='failure'
-                          onClick={() =>
+                      >
+                        {loadingIds.includes(row._id) ? (
+                          <>
+                            <Spinner size="sm" />
+                            <span className="pl-3">Loading...</span>
+                          </>
+                        ) : (
+                          "Revoke Admin"
+                        )}
+                      </Button>
+                    ) : (
+                      <Button
+                        className="w-35 px-2"
+                        color="failure"
+                        onClick={() =>
                           openStatusChangeModal(row._id, row.isAdmin)
                         }
-                  >
-                Grant Admin
-                  </Button>
-                  }
-                
+                      >
+                        {loadingIds.includes(row._id) ? (
+                          <>
+                            <Spinner size="sm" />
+                            <span className="pl-3">Loading...</span>
+                          </>
+                        ) : (
+                          "Grant Admin"
+                        )}
+                      </Button>
+                    )}
                   </Table.Cell>
                 </Table.Row>
               </Table.Body>
