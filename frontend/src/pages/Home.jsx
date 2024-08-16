@@ -82,7 +82,7 @@ const Home = () => {
 
       {/* ................ */}
       <div>
-        <div className="max-w mx-auto px-5 flex flex-col">
+        <div className="flex flex-col max-w mx-10 ">
           {posts && posts.length > 0 && (
             <div className="flex flex-col sm:mx-auto">
               <h2 className="text-2xl font-semibold text-center my-5">
