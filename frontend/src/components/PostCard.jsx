@@ -1,12 +1,7 @@
-import { BsCheckLg } from "react-icons/bs";
-import { AiOutlineClose } from "react-icons/ai";
-import { Button } from "flowbite-react";
-import { useSelector } from "react-redux";
-// import { images, stables } from "../constants";
-import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect ,useState} from "react";
+import {Link} from 'react-router-dom';
+function PostCard({ post }) {
 
-const PostCard = ({ post, className }) => {
   const [user, setUser] = useState({});
 
   useEffect(()=>{
@@ -24,49 +19,33 @@ const PostCard = ({ post, className }) => {
     getUser();
   },[])
   return (
-    <div className="group relative w-full shadow-md shadow-[#ff7b86]  overflow-hidden rounded-lg sm:w-[420px] transition-all">
-      {/* <Link to={`/blog/${post.slug}`}> */}
+    
+    <div className="m-2 max-w-sm w-full rounded-xl overflow-hidden shadow-lg bg-gradient-to-b from-blue-100 to-pink-200 hover:bg-gradient-to-b hover:from-[#f5e0e0] hover:to-[#f36570d5] transition-all duration-300 ease-in-out transform hover:scale-105">
+    <Link  to={`/post/${post.slug}`}>
       <img
+        className="w-full h-48 object-cover object-center"
         src={post.image}
-        alt="title"
-        className="w-full object-cover object-center h-auto md:h-52 lg:h-48 xl:h-60"
+        alt="Flight"
       />
-      {/* </Link> */}
-      <div className="p-5">
-        {/* <Link to={`/blog/${post.slug}`}> */}
-        <h2 className=" font-roboto font-bold text-dark-soft md:text-2xl lg:text-[20px] h-20">
-          {post.title}
-        </h2>
-        {/* </Link> */}
-        <div className="flex justify-between flex-nowrap items-center mt-6">
-          <div className="flex items-center gap-x-2 md:gap-x-2.5">
-            <img
-              src={user.profilePicture}
-              alt="post profile"
-              className="w-9 h-9 md:w-10 md:h-10 rounded-full"
-            />
-            <div className="flex flex-col">
-              <h4 className="font-bold italic text-dark-soft text-sm md:text-base text-[#ff5360]">
-                {user.username}
-              </h4>
-              <div className="flex items-center gap-x-2"></div>
-            </div>
-          </div>
-          <span className="font-bold text-[#ff5360] italic text-sm md:text-base">
-            {new Date(post.createdAt).getDate()}{" "}
+      <div className="p-6">
+
+        <div className="pt-4">
+          <h2 className="text-xl font-bold">{post.title}</h2>
+          <p className="text-gray-600">{post.category}</p>
+          <p className="text-sm text-gray-500 mt-2">Posted : 
+          {new Date(post.createdAt).getDate()}{" "}
             {new Date(post.createdAt).toLocaleString("default", {
-              month: "long",
-            })}
-          </span>
+               month: "long",
+             })}</p>
         </div>
-        <Link to={`/post/${post.slug}`}>
-          <Button className="w-full my-5" outline gradientMonochrome="success">
-            View article
-          </Button>
-        </Link>
+        <div className="flex items-center pt-2">
+          <img src={post.image} alt="Ixigo" className="w-10 h-10 rounded-full " />&nbsp; @{user.username}
+        </div>
       </div>
+    </Link>
     </div>
+
   );
-};
+}
 
 export default PostCard;
