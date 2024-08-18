@@ -1,8 +1,10 @@
+import { useSelector } from "react-redux";
 import jabidImage from '../assets/images/jabid.jpg'
-
 import { Card, Avatar, Button } from "flowbite-react";
 
 const About = () => {
+  const { currentUser } = useSelector((state) => state.user);
+
   return (
     <div className="container mx-auto px-4 py-10">
       {/* Introduction Section */}
@@ -65,15 +67,24 @@ const About = () => {
       </div>
 
       {/* Call to Action Section */}
+      {
+        !currentUser && 
+
       <div className="text-center">
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">Join Our Community</h2>
         <p className="text-gray-600 mb-6">
           Interested in what we do? Subscribe to our newsletter to stay updated with the latest posts and exclusive content.
         </p>
-        <Button href='/sign-in' color="primary" className="px-6 py-2 text-lg">
-          Join Now
-        </Button>
+        <div  className="flex justify-center">
+        <Link to="/sign-in">
+            <Button style={{background:"#ff5360"}} outline>
+              Join In
+            </Button>
+          </Link>
+        </div>
+          
       </div>
+      }
     </div>
   );
 };

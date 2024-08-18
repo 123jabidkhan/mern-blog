@@ -45,7 +45,7 @@ export default function Search() {
         const data = await res.json();
         setPosts(data.posts);
         setLoading(false);
-        if (data.posts.length === 9) {
+        if (data.posts.length > 5) {
           setShowMore(true);
         } else {
           setShowMore(false);
@@ -92,7 +92,7 @@ export default function Search() {
     if (res.ok) {
       const data = await res.json();
       setPosts([...posts, ...data.posts]);
-      if (data.posts.length === 9) {
+      if (data.posts.length > 5) {
         setShowMore(true);
       } else {
         setShowMore(false);
@@ -129,10 +129,10 @@ export default function Search() {
             id="category"
             className="w-2/3" // Set a fixed width for the select dropdown
           >
-            <option value='uncategorized'>Uncategorized</option>
-              <option value='reactjs'>React.js</option>
-              <option value='nextjs'>Next.js</option>
-              <option value='javascript'>JavaScript</option>
+            <option value="general">Select a category</option>
+            <option value="technology">Technology</option>
+            <option value="lifestyle">Life style</option>
+            <option value="business">Business</option>
           </Select>
 
           <Button
@@ -157,7 +157,7 @@ export default function Search() {
           {showMore && (
             <button
               onClick={handleShowMore}
-              className='text-teal-500 text-lg hover:underline p-7 w-full'
+              className='text-pink-500 text-lg hover:underline p-7 w-full'
             >
               Show More
             </button>

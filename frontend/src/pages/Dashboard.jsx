@@ -17,9 +17,9 @@ const Dashboard = () => {
     if (tabFromUrl) {
       setTab(tabFromUrl);
     }
-    if(!tab){
-      navigate('/dashboard?tab=profile');
-    }
+    // if(!tab){
+    //   navigate('/');
+    // }
   }, [location.search]);
   return (
     <div className="min-h-screen flex gap-6 flex-row md:flex-row">
@@ -36,7 +36,9 @@ const Dashboard = () => {
  {/* Dashboard Comments */}
  {tab === 'users' && <DashUsers/>}
   {/* Dashboard component */}
-  {tab === 'dash' && <DashboardCompo/>}
+  {tab === 'dash'  && <DashboardCompo/>}
+  {tab === ''  && <DashboardCompo/>}
+
     </div>
   );
 };

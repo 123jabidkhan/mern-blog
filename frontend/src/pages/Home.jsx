@@ -16,6 +16,9 @@ const Home = () => {
     };
     fetchPosts();
   }, []);
+  const scrollToSection = ()=>{
+    document.getElementById('target-section').scrollIntoView({ behavior: 'smooth' });
+  }
 
   return (
     <>
@@ -66,12 +69,12 @@ const Home = () => {
             </Link>
           </span>
           <span className="inline mr-2">
-            <Link
-              to={!currentUser ? "/sign-in" : "dashboard?tab=posts"}
+            <button
+             onClick={scrollToSection}
               className="px-10 py-3 text-white uppercase tracking-wide no-underline text-sm font-semibold rounded shadow inline-block px-8 animate-bounce focus:animate-none hover:animate-none bg-green-400 "
             >
-              All Posts
-            </Link>
+              Recent Posts
+            </button>
           </span>
         </section>
 
@@ -81,7 +84,7 @@ const Home = () => {
       </section>
 
       {/* ................ */}
-      <div>
+      <div id='target-section'>
         <div className="flex flex-col max-w mx-10 ">
           {posts && posts.length > 0 && (
             <div className="flex flex-col sm:mx-auto">

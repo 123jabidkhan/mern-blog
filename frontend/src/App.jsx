@@ -1,4 +1,4 @@
-import { useLocation, Routes, Route } from "react-router-dom";
+import { useLocation, Routes, Route , Navigate} from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Dashboard from "./pages/Dashboard";
@@ -30,11 +30,8 @@ const App = () => {
           <Route element={<PrivateRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
           </Route>
-          {/* admin private routes */}
-          {/* <Route element={<AdminPrivateRoute />}> */}
-            <Route path="/create-post" element={<CreatePost />} />
-            <Route path='/update-post/:postId' element={<UpdatePost/>}></Route>
-          {/* </Route> */}
+          <Route path="/create-post" element={<CreatePost />} />
+          <Route path='/update-post/:postId' element={<UpdatePost/>}></Route>
           <Route path="/sign-in" element={<SigIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           {/* page not found route */}

@@ -142,7 +142,7 @@ const DashboardCompo = () => {
                      <Table.Cell>{user.email}</Table.Cell> 
                      <Table.Cell>
                      {
-                      user.isAdmin ?<span className='text-green-500'>Admin</span>: <span className='text-orange-500'>User</span>
+                      user.isAdmin ?<span className='text-green-100 bg-green-400 rounded-sm px-1'>Admin</span>: <span className='text-orange-100 bg-orange-400 rounded-sm px-1'>&nbsp;User&nbsp;&nbsp;</span>
                      }
                      </Table.Cell>
                    </Table.Row>
