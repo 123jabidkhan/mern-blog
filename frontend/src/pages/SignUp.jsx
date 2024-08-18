@@ -47,7 +47,6 @@ const SignUp = () => {
         dispatch(signInSuccess(res.data.message));
         navigate("/sign-in");
       }
-      console.log(res.data);
     } catch (error) {
       dispatch(signInFailure(error.response.data.message));
     }
@@ -72,7 +71,7 @@ const SignUp = () => {
               Sign up to share your thoughts, follow your favorite authors, and never miss an update.
             </p>
             <Link to='/'>
-            <Button color='failure'>Latest article</Button>
+            <Button color='failure'>Latest articles</Button>
             </Link>
           </div>
         </div>

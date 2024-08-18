@@ -66,7 +66,6 @@ const DashboardCompo = () => {
           fetchComments();
         }
       }, [currentUser]);
-      console.log(comments)
       return (
     <>
       <div className="p-4">

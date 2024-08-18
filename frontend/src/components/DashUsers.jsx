@@ -122,7 +122,6 @@ const DashUsers = () => {
         body: JSON.stringify({ isAdmin: !userStatus }),
       });
       const data = await res.json();
-      console.log("updated user >>", data);
       if (!res.ok) {
         setLoading(false);
         console.log("Something went wrong while status update >", data.message);

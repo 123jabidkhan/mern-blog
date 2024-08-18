@@ -39,9 +39,9 @@ const Home = () => {
                   {/* Style will be inherited from the parent element */}
                   <Typewriter
                     words={[
-                      "Innovation starts here—let’s explore the future together!",
-                      "Your journey to mastering tech begins now!",
                       "Transform your knowledge and skills with our insightful articles.",
+                      "Your journey to mastering tech begins now!",
+                      "Innovation starts here—let’s explore the future together!",
                     ]}
                     loop={10}
                     cursor

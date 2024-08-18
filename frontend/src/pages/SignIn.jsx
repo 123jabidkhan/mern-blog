@@ -45,7 +45,6 @@ const SignIn = () => {
         dispatch(signInSuccess(res.data));
         navigate("/");
       }
-      console.log(res.data);
     } catch (error) {
       dispatch(signInFailure(error.response.data.message));
     }
@@ -69,7 +68,7 @@ const SignIn = () => {
               Access your personalized content, save your favorite posts, and join the conversation by Signing in
             </p>
             <Link to='/'>
-            <Button color='failure'>Latest article</Button>
+            <Button color='failure'>Latest articles</Button>
             </Link>
           </div>
         </div>

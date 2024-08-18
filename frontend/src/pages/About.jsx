@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import jabidImage from '../assets/images/jabid.jpg'
 import { Card, Avatar, Button } from "flowbite-react";
-
+import {Link} from 'react-router-dom';
 const About = () => {
   const { currentUser } = useSelector((state) => state.user);
 
