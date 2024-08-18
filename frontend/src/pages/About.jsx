@@ -26,7 +26,7 @@ const About = () => {
             alt="Member 1"
             className="mx-auto mb-4"
           />
-          <h3 className="text-xl font-semibold text-gray-800">Rupesh</h3>
+          <h3 className="text-xl font-semibold text-gray-800 dark:text-white">Rupesh</h3>
           <p className="text-gray-600">Lead Writer</p>
           <p className="mt-2 text-gray-500 text-sm">
           Rupesh is a talented Lead Writer with a flair for crafting compelling and engaging content. His ability to capture the essence of a message and convey it in a clear
@@ -42,7 +42,7 @@ const About = () => {
             alt="Member 2"
             className="mx-auto mb-4"
           />
-          <h3 className="text-xl font-semibold text-gray-800">Jabid</h3>
+          <h3 className="text-xl font-semibold text-gray-800 dark:text-white">Jabid</h3>
           <p className="text-gray-600">Software Developer</p>
           <p className="mt-2 text-gray-500 text-sm">
           Jabid is a passionate software developer with a strong focus on creating efficient and scalable web applications. With a deep understanding of modern technologies,
@@ -58,7 +58,7 @@ const About = () => {
             alt="Member 3"
             className="mx-auto mb-4"
           />
-          <h3 className="text-xl font-semibold text-gray-800">Manivel</h3>
+          <h3 className="text-xl font-semibold text-gray-800 dark:text-white">Manivel</h3>
           <p className="text-gray-600">SEO Expert</p>
           <p className="mt-2 text-gray-500 text-sm">
           Manivel is an experienced SEO expert with a proven track record in optimizing websites for search engines. His expertise in keyword research, on-page optimization, 
