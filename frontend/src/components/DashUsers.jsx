@@ -100,7 +100,7 @@ const DashUsers = () => {
       const data = await res.json();
       if (res.ok) {
         setUsers((prev) => [...prev, ...data.users]);
-        if (data.users.length < 9) {
+        if (data.users.length < 6) {
           setShowMore(false);
         }
       }

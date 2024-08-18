@@ -285,7 +285,7 @@ const SignIn = () => {
                 <OAuth />
               </div>
               <p className="mt-6 text-sm  text-black text-center">
-                Already have an account?{" "}
+                if you are new user create an account?{" "}
                 <Link to="/sign-up" className="text-black font-bold">
                   Sign Up
                 </Link>

@@ -110,7 +110,7 @@ const DashPosts = () => {
                     deletion &nbsp;
                   </span>
                   <HiOutlineTrash
-                    className="w-6 h-6 mr-10 text-[#bd0e0e] transition-transform duration-200 ease-in-out hover:scale-125"
+                    className="w-6 h-6 mr-10 text-[red] transition-transform duration-200 ease-in-out hover:scale-125"
                     size="23"
                     onClick={() => {
                       setShowModal(true);

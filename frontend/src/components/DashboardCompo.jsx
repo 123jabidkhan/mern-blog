@@ -142,7 +142,7 @@ const DashboardCompo = () => {
                      <Table.Cell>{user.email}</Table.Cell> 
                      <Table.Cell>
                      {
-                      user.isAdmin ?<span className='text-green-500'>Admin</span>: <span className='text-orange-500'>Admin</span>
+                      user.isAdmin ?<span className='text-green-500'>Admin</span>: <span className='text-orange-500'>User</span>
                      }
                      </Table.Cell>
                    </Table.Row>
@@ -206,14 +206,14 @@ const DashboardCompo = () => {
                      <img
                         src={post.image}
                         alt='user'
-                        className='w-14 h-10 rounded-md bg-gray-500'
+                        className='w-14 h-10  bg-gray-500'
                       />
                      </Table.Cell>
                      <Table.Cell>{post.title}</Table.Cell>
                      <Table.Cell>{post.category}</Table.Cell> 
                     
                    </Table.Row>
-                 </Table.Body>
+                 </Table.Body> 
                ))}
               </Table>
             </Card>
