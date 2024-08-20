@@ -10,9 +10,9 @@ import PrivateRoute from "./components/PrivateRoute";
 import CreatePost from "./pages/CreatePost";
 import UpdatePost from "./pages/UpdatePost";
 import PostPage from "./pages/PostPage";
-import ScrollToTop from "./components/ScrollToTop";
 import PageNotFound from "./pages/PageNotFound";
 import Search from "./pages/Search";
+import ScrollToTop from "./components/ScrollToTop";
 const App = () => {
   const location = useLocation();
   const hideHeaderFooter = location.pathname === '/sign-up' || location.pathname === '/sign-in';
