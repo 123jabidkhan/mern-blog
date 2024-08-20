@@ -49,6 +49,7 @@ export default function CommentSection({ postId }) {
         }),
       });
       const data = await res.json();
+      console.log('data from com >>', data)
       if (res.ok) {
         setComment('');
         setCommentError(null);

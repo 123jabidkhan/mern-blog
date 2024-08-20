@@ -11,6 +11,7 @@ export default function Comment({ comment, onLike, onEdit, onDelete }) {
   const [editedContent, setEditedContent] = useState(comment.content);
   const { currentUser } = useSelector((state) => state.user);
   useEffect(() => {
+    console.log(comment);
     const getUser = async () => {
       try {
         const res = await fetch(`/api/user/${comment.userId}`);

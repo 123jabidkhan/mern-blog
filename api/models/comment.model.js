@@ -2,23 +2,22 @@ import mongoose from 'mongoose';
 
 const commentSchema = new mongoose.Schema(
   {
-    userId: {
+    content: {
       type: String,
       required: true,
     },
     postId: {
       type: String,
       required: true,
-      unique: true,
     },
-    content: {
+    userId: {
       type: String,
       required: true,
     },
-   likes:{
-    type:Array,
-    default:[],
-   },
+    likes: {
+      type: Array,
+      default: [],
+    },
     numberOfLikes: {
       type: Number,
       default: 0,
