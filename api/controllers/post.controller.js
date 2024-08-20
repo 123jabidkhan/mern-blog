@@ -1,5 +1,6 @@
 import { errorHandler } from "../utils/error.js";
 import Post from "../models/post.model.js";
+import Comment from "../models/comment.model.js";
 
 // Create new post
 const createPost = async (req, res, next) => {
@@ -84,6 +85,7 @@ const createPost = async (req, res, next) => {
     }
     try {
       await Post.deleteMany({ _id: { $in: ids } });
+      // await Comment.deleteMany({_id:{$in:ids}});
       res.status(200).json({ message: 'Posts deleted successfully' });
     } catch (error) {
       console.error('Error deleting posts:', error);

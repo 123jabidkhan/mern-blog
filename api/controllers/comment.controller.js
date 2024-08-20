@@ -80,23 +80,41 @@ export const editComment = async (req, res, next) => {
   }
 };
 
-export const deleteComment = async (req, res, next) => {
+// Delete multiple comments by IDs
+export const deleteComments = async (req, res, next)=>{
+  const {ids} = req.body;
+  if (!req.user){
+    return next(errorHandler(403, 'You are not allowed to delete this comment'));
+  }
+  if (!Array.isArray(ids)) {
+    return res.status(400).json({ error: 'Invalid data format. ids should be an array.' });
+  }
   try {
-    const comment = await Comment.findById(req.params.commentId);
-    if (!comment) {
-      return next(errorHandler(404, 'Comment not found'));
-    }
-    if (comment.userId !== req.user.id && !req.user.isAdmin) {
-      return next(
-        errorHandler(403, 'You are not allowed to delete this comment')
-      );
-    }
-    await Comment.findByIdAndDelete(req.params.commentId);
-    res.status(200).json('Comment has been deleted');
+    await Comment.deleteMany({ _id: { $in: ids } });
+    res.status(200).json({ message: 'Comments deleted successfully' });
   } catch (error) {
+    console.error('Error deleting comments:', error);
     next(error);
   }
-};
+}
+
+// export const deleteComment = async (req, res, next) => {
+//   try {
+//     const comment = await Comment.findById(req.params.commentId);
+//     if (!comment) {
+//       return next(errorHandler(404, 'Comment not found'));
+//     }
+//     if (comment.userId !== req.user.id && !req.user.isAdmin) {
+//       return next(
+//         errorHandler(403, 'You are not allowed to delete this comment')
+//       );
+//     }
+//     await Comment.findByIdAndDelete(req.params.commentId);
+//     res.status(200).json('Comment has been deleted');
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 export const getcomments = async (req, res, next) => {
   if (!req.user.isAdmin)
