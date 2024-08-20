@@ -105,8 +105,12 @@ export default function CommentSection({ postId }) {
         navigate('/sign-in');
         return;
       }
-      const res = await fetch(`/api/comment/deleteComment/${commentId}`, {
-        method: 'DELETE',
+      const res = await fetch(`/api/comment/deleteComments`, {
+        method: "DELETE",
+        headers: {
+              'Content-Type': 'application/json',
+            },
+        body: JSON.stringify({ ids: [commentId] }),
       });
       if (res.ok) {
         const data = await res.json();

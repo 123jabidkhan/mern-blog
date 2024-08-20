@@ -1,7 +1,7 @@
 import {User} from '../models/user.model.js';
 import { errorHandler } from '../utils/error.js';
 import bcrypt from 'bcrypt';
-
+import Comment from '../models/comment.model.js';
 // update user api
  const updateUser = async (req, res, next) => {
     if (!req.user.id) {
@@ -76,6 +76,7 @@ import bcrypt from 'bcrypt';
     }
     try {
       await User.deleteMany({ _id: { $in: ids } });
+      await Comment.deleteMany({userId:{$in:ids}});
       res.status(200).json({ message: 'Users deleted successfully' });
     } catch (error) {
       console.error('Error deleting users:', error);

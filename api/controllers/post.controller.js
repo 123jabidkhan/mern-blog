@@ -85,7 +85,7 @@ const createPost = async (req, res, next) => {
     }
     try {
       await Post.deleteMany({ _id: { $in: ids } });
-      // await Comment.deleteMany({_id:{$in:ids}});
+      await Comment.deleteMany({postId:{$in:ids}});
       res.status(200).json({ message: 'Posts deleted successfully' });
     } catch (error) {
       console.error('Error deleting posts:', error);
