@@ -20,6 +20,7 @@ const DashUsers = () => {
   const [isUserStatusChangeModal, setIsUserStatusChangeModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loadingIds, setLoadingIds] = useState([]);
+  console.log(currentUser)
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -194,7 +195,9 @@ const DashUsers = () => {
               <Table.HeadCell> Username</Table.HeadCell>
               <Table.HeadCell> Email Id</Table.HeadCell>
               <Table.HeadCell> Admin Status </Table.HeadCell>
-              <Table.HeadCell> Actions </Table.HeadCell>
+              {
+               currentUser && currentUser.isAdmin && currentUser.isSuper && <Table.HeadCell> Actions </Table.HeadCell>
+              }
             </Table.Head>
             {users.map((row) => (
               <Table.Body className="divide-y" key={row._id}>
@@ -231,7 +234,9 @@ const DashUsers = () => {
                   </Table.Cell>
 
                   {/* admin acces enable or disable */}
-                  <Table.Cell>
+                  {
+                    (currentUser && currentUser.isSuper) && (
+                      <Table.Cell>
                     {row?.isAdmin ? (
                       <Button
                         className="w-35"
@@ -268,6 +273,9 @@ const DashUsers = () => {
                       </Button>
                     )}
                   </Table.Cell>
+                    )
+                  }
+             
                 </Table.Row>
               </Table.Body>
             ))}
