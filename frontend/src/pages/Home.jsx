@@ -40,8 +40,8 @@ const Home = () => {
                   <Typewriter
                     words={[
                       "Transform your knowledge and skills with our insightful articles.",
-                      "Your journey to mastering tech begins now!",
                       "Innovation starts here—let’s explore the future together!",
+                      "Your journey to mastering tech begins now!",
                     ]}
                     loop={10}
                     cursor
