@@ -78,7 +78,7 @@ const SignUp = () => {
             <h1 className="text-4xl font-bold text-black">Sign Up</h1>
             <br />
 
-            <p className="text-gray-100 text-sm text-black dark:text-white">
+            <p className="text-black text-sm text-black dark:text-white">
               Hey enter your details to create your account
             </p>
             <form

@@ -83,7 +83,7 @@ const SignIn = () => {
             <h1 className="text-4xl font-bold text-black">Sign In</h1>
             <br />
 
-            <p className="text-gray-100 text-sm text-black dark:text-white">
+            <p className="text-black text-sm dark:text-white">
               You can sign in with your email and password or with Google.
             </p>
             <form

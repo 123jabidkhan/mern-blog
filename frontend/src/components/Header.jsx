@@ -4,7 +4,7 @@ import { Link, useLocation , useNavigate} from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaSun, FaMoon } from "react-icons/fa";
 import { Dropdown } from "flowbite-react";
-import { HiLockClosed } from "react-icons/hi";
+import { MdLogout } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice";
 import {signoutSuccess} from '../redux/user/userSlice';
@@ -119,7 +119,7 @@ const Header = () => {
             <Dropdown.Item>About</Dropdown.Item>
           </Link>
          
-            <Dropdown.Item icon={HiLockClosed} onClick={handleSignout}>Sign out</Dropdown.Item>
+            <Dropdown.Item icon={MdLogout} onClick={handleSignout}>Sign out</Dropdown.Item>
           </Dropdown>
         ) : (
           <Link to="/sign-in">

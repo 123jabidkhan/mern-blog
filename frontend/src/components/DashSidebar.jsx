@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   HiUser,
-  HiLockClosed,
   HiDocumentText,
   HiOutlineUserGroup,
   HiAnnotation,
@@ -13,6 +12,7 @@ import { RxCross2 } from "react-icons/rx";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import {signoutSuccess} from '../redux/user/userSlice';
+import { MdLogout } from "react-icons/md";
 
 const DashSidebar = () => {
   const location = useLocation();
@@ -138,7 +138,7 @@ const DashSidebar = () => {
               {React.createElement(
                 'button',
                 null,
-                React.createElement(HiLockClosed, { size: 20, color: "grey" })
+                React.createElement(MdLogout, { size: 20, color: "grey" })
               )}
             </div>
             <h2

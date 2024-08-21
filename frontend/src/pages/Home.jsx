@@ -59,9 +59,8 @@ const Home = () => {
             </div>
           </div>
           <p className="msg">
-            Welcome to our bloghub! Dive into the latest trends, tutorials, and
-            expert insights. Discover how technology is shaping the future and
-            stay ahead in the field.
+            Welcome to BlogHub—your source 
+            for inspiring articles and fresh ideas. Explore, learn, and enjoy!
           </p>
 
           <span className="inline mr-2">

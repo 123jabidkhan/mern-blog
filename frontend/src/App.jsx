@@ -22,7 +22,7 @@ const App = () => {
     <>
       
       <ScrollToTop/>
-      <ToastNotification/>
+      {!hideHeaderFooter && <ToastNotification/>}
       {!hideHeaderFooter && <Header />}
         <Routes>
           <Route path="/" element={<Home />} />
