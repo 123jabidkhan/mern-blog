@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import CommentSection from '../components/CommentSection';
 import PostCard from '../components/PostCard';
+import { useLocation } from 'react-router-dom';
+
 
 
 export default function PostPage() {
@@ -11,8 +13,10 @@ export default function PostPage() {
   const [error, setError] = useState(false);
   const [post, setPost] = useState(null);
   const [recentPosts, setRecentPosts] = useState(null);
+  const { pathname } = useLocation();
 
   useEffect(() => {
+    window.scrollTo(0,0);
     const fetchPost = async () => {
       try {
         setLoading(true);
@@ -34,7 +38,8 @@ export default function PostPage() {
       }
     };
     fetchPost();
-  }, [postSlug]);
+
+  }, [postSlug, pathname]);
 
   useEffect(() => {
     try {

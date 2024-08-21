@@ -16,9 +16,11 @@ const Home = () => {
     };
     fetchPosts();
   }, []);
-  const scrollToSection = ()=>{
-    document.getElementById('target-section').scrollIntoView({ behavior: 'smooth' });
-  }
+  const scrollToSection = () => {
+    document
+      .getElementById("target-section")
+      .scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <>
@@ -42,6 +44,8 @@ const Home = () => {
                       "Transform your knowledge and skills with our insightful articles.",
                       "Innovation starts here—let’s explore the future together!",
                       "Your journey to mastering tech begins now!",
+                      "Discover the latest trends in tech...",
+                      "Read inspiring stories from developers...",
                     ]}
                     loop={10}
                     cursor
@@ -55,9 +59,9 @@ const Home = () => {
             </div>
           </div>
           <p className="msg">
-            Welcome to our bloghub! Dive into the latest trends, tutorials,
-            and expert insights. Discover how technology is shaping the future
-            and stay ahead in the field.
+            Welcome to our bloghub! Dive into the latest trends, tutorials, and
+            expert insights. Discover how technology is shaping the future and
+            stay ahead in the field.
           </p>
 
           <span className="inline mr-2">
@@ -70,7 +74,7 @@ const Home = () => {
           </span>
           <span className="inline mr-2">
             <button
-             onClick={scrollToSection}
+              onClick={scrollToSection}
               className="px-10 py-3 text-white uppercase tracking-wide no-underline text-sm font-semibold rounded shadow inline-block px-8 animate-bounce focus:animate-none hover:animate-none bg-green-400 "
             >
               Recent Posts
@@ -84,7 +88,7 @@ const Home = () => {
       </section>
 
       {/* ................ */}
-      <div id='target-section'>
+      <div id="target-section">
         <div className="flex flex-col max-w mx-10 ">
           {posts && posts.length > 0 && (
             <div className="flex flex-col sm:mx-auto">

@@ -16,11 +16,12 @@ const DashComments = () => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const res = await fetch(`/api/comment/getComments`);
+        
+        const res = await fetch(`/api/comment/getComments?limit=${5}`);
         const data = await res.json();
         if (res.ok) {
           setComments(data.comments);
-          if (data.users.length < 5) {
+          if (data.comments.length < 5) {
             setShowMore(false);
           }
         }
@@ -53,7 +54,7 @@ const DashComments = () => {
   };
 
 //   Delete posts byIDS
-    const handleDeletePost = async () => {
+    const handleDeleteComment = async () => {
       setShowModal(false);
       try{
         const res = await fetch(`/api/comment/deleteComments/`, {
@@ -199,7 +200,7 @@ const DashComments = () => {
               Are you sure you want to delete this post?
             </h3>
             <div className="flex justify-center gap-4">
-              <Button gradientMonochrome="failure" onClick={handleDeletePost}>
+              <Button gradientMonochrome="failure" onClick={handleDeleteComment}>
                 Yes, I`m sure
               </Button>
               <Button color="gray" onClick={() => setShowModal(false)}>
