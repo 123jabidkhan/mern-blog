@@ -13,11 +13,11 @@ import loginBg from "../assets/images/loginBg.jpg";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({});
-  // const [loading, setLoading] = useState(false);
-  // const [errorMessage, setErrorMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { loading, error: errorMessage } = useSelector((state) => state.user);
+  // const dispatch = useDispatch();
+  // const { loading, error: errorMessage } = useSelector((state) => state.user);
 
   //   // input on change
   const handleChange = (e) => {
@@ -26,29 +26,56 @@ const SignUp = () => {
   };
 
   //   // form submit
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (!formData.username || !formData.email || !formData.password) {
+  //     return dispatch(signInFailure("All fields are required."));
+  //   }
+  //   try {
+  //     // ..without Redux..
+  //     // setLoading(true);
+  //     // setErrorMessage(null);
+
+  //     // wih Redux, loading start and error value set null:
+  //     dispatch(signInStart());
+  //     const res = await axios.post("/api/auth/signup", formData);
+  //     if (res.data.success === false) {
+  //       return dispatch(signInFailure(res.data.message));
+  //     }
+  //     // if response ok
+  //     if (res.statusText) {
+  //       dispatch(signInSuccess(res.data.message));
+  //       navigate("/sign-in");
+  //     }
+  //   } catch (error) {
+  //     dispatch(signInFailure(error.response.data.message));
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.username || !formData.email || !formData.password) {
-      return dispatch(signInFailure("All fields are required."));
+      return setErrorMessage('Please fill out all fields.');
     }
     try {
-      // ..without Redux..
-      // setLoading(true);
-      // setErrorMessage(null);
-
-      // wih Redux, loading start and error value set null:
-      dispatch(signInStart());
-      const res = await axios.post("/api/auth/signup", formData);
-      if (res.data.success === false) {
-        return dispatch(signInFailure(res.data.message));
+      setLoading(true);
+      setErrorMessage(null);
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        return setErrorMessage(data.message);
       }
-      // if response ok
-      if (res.statusText) {
-        dispatch(signInSuccess(res.data.message));
-        navigate("/sign-in");
+      setLoading(false);
+      if(res.ok) {
+        navigate('/sign-in');
       }
     } catch (error) {
-      dispatch(signInFailure(error.response.data.message));
+      setErrorMessage(error.message);
+      setLoading(false);
     }
   };
 

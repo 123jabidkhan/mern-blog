@@ -3,7 +3,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaCheckCircle } from 'react-icons/fa';
 const ToastNotification = () => {
-    const names = ["Arjun", "Priya", "Rahul", "Sneha", "Vikram"];
+    const names = ["Devin", "Priya", "Rahul", "Sneha", "Vikram"];
 
 
 
@@ -45,7 +45,7 @@ const ToastNotification = () => {
     };
 
     // Trigger a toast every 10 seconds
-    const interval = setInterval(showToast, 10000);
+    const interval = setInterval(showToast, 15000);
 
     // Cleanup the interval on component unmount
     return () => clearInterval(interval);
