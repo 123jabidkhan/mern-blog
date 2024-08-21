@@ -89,7 +89,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-gray-400 py-8 bg-white dark:bg-[#f3edebde]">
+    <footer className="bg-gray-900 text-gray-400 py-8 bg-white dark:bg-[#12153157]">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
           {/* Footer Links */}
