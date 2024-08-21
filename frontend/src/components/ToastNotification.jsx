@@ -3,13 +3,13 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaCheckCircle } from 'react-icons/fa';
 const ToastNotification = () => {
-    const names = ["Devin", "Priya", "Rahul", "Sneha", "Vikram"];
+    const names = ["Devin", "Priya", "Rahul", "Sneha", "Mohith","Anil","Neha"];
 
 
 
   // Function to get a random time ago string
   const getRandomTimeAgo = () => {
-    const minutes = [10, 20, 30, 45, 60]; // Example times in minutes
+    const minutes = [10, 20, 30, 45, 60,15,40]; // Example times in minutes
     const randomIndex = Math.floor(Math.random() * minutes.length);
     return `${minutes[randomIndex]} minutes ago`;
   };

@@ -1,19 +1,20 @@
 import loginBg from "../assets/images/loginBg.jpg";
 import { useState } from "react";
-import {  Spinner, Button } from "flowbite-react";
+import { Spinner, Button } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { useDispatch,useSelector } from "react-redux";
-import { signInStart, signInSuccess, signInFailure } from "../redux/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+} from "../redux/user/userSlice";
 import OAuth from "../components/OAuth";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({});
-  // const [loading, setLoading] = useState(false);
-  // const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const  {loading, error:errorMessage} = useSelector((state)=>state.user);
+  const { loading, error: errorMessage } = useSelector((state) => state.user);
 
   // input on change
   const handleChange = (e) => {
@@ -21,32 +22,30 @@ const SignIn = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // form submit SignIn
+  // SignIn submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.email || !formData.password) {
-      return dispatch(signInFailure("All fields are required."));
+      return dispatch(signInFailure("Please fill all the fields"));
     }
     try {
-      // without Redux
-      // setLoading(true);
-      // setErrorMessage(null);
-
-       // wih Redux, loading start and error value set null:
-       dispatch(signInStart());
-
-      const res = await axios.post("/api/auth/signin", formData);
-      if (res.data.success === false) {
-        return dispatch(signInFailure(res.data.message));
+      dispatch(signInStart());
+      const res = await fetch("/api/auth/signin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(signInFailure(data.message));
       }
 
-      // if response ok
-      if (res.statusText) {
-        dispatch(signInSuccess(res.data));
+      if (res.ok) {
+        dispatch(signInSuccess(data));
         navigate("/");
       }
     } catch (error) {
-      dispatch(signInFailure(error.response.data.message));
+      dispatch(signInFailure(error.message));
     }
   };
   const backgroundImage = {
@@ -54,28 +53,26 @@ const SignIn = () => {
   };
   return (
     <>
- <section className="min-h-screen flex items-stretch text-white p-5 ">
+      <section className="min-h-screen flex items-stretch text-white p-5 ">
         <div
           className="lg:flex w-1/2 hidden bg-gray-500 bg-no-repeat bg-cover relative items-center"
           style={backgroundImage}
         >
           <div className="absolute bg-[#008a008f] opacity-90 inset-0 z-0"></div>
           <div className="w-full px-24 z-10">
-          <h1 className="text-5xl font-extrabold text-left tracking-wide">
+            <h1 className="text-5xl font-extrabold text-left tracking-wide">
               Welcome To BlogHub
             </h1>
             <p className="text-xl  font-bold my-4">
-              Access your personalized content, save your favorite posts, and join the conversation by Signing in
+              Access your personalized content, save your favorite posts, and
+              join the conversation by Signing in
             </p>
-            <Link to='/'>
-            <Button color='failure'>Latest articles</Button>
+            <Link to="/">
+              <Button color="failure">Latest articles</Button>
             </Link>
           </div>
         </div>
-        <div
-          className="lg:w-1/2 w-full flex  dark:bg-[#008a007d]  items-center justify-center text-center md:px-16 px-0 z-0"
-         
-        >
+        <div className="lg:w-1/2 w-full flex  dark:bg-[#008a007d]  items-center justify-center text-center md:px-16 px-0 z-0">
           <div
             className="absolute lg:hidden z-10 inset-0 bg-gray-500 bg-no-repeat bg-cover items-center"
             style={backgroundImage}
@@ -83,19 +80,17 @@ const SignIn = () => {
             <div className="absolute bg-[#28ee49b0] opacity-80 inset-0 z-0"></div>
           </div>
           <div className="w-full py-4 z-20">
-              <h1 className="text-4xl font-bold text-black">
-                Sign In
-              </h1><br />
+            <h1 className="text-4xl font-bold text-black">Sign In</h1>
+            <br />
 
             <p className="text-gray-100 text-sm text-black dark:text-white">
-           You can sign in with your email and password or with Google.
+              You can sign in with your email and password or with Google.
             </p>
             <form
               action=""
               className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto"
               onSubmit={handleSubmit}
             >
-             
               <div className="pb-2 pt-4 p-3">
                 <input
                   className="w-full px-5 py-3 text-[black] rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
@@ -155,7 +150,7 @@ const SignIn = () => {
         </div>
       </section>
     </>
-  )
-}
+  );
+};
 
 export default SignIn;

@@ -1,13 +1,6 @@
 import { useState } from "react";
 import { Spinner, Button } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  signInStart,
-  signInSuccess,
-  signInFailure,
-} from "../redux/user/userSlice";
 import OAuth from "../components/OAuth";
 import loginBg from "../assets/images/loginBg.jpg";
 
@@ -16,8 +9,6 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
-  // const { loading, error: errorMessage } = useSelector((state) => state.user);
 
   //   // input on change
   const handleChange = (e) => {
@@ -25,44 +16,17 @@ const SignUp = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  //   // form submit
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (!formData.username || !formData.email || !formData.password) {
-  //     return dispatch(signInFailure("All fields are required."));
-  //   }
-  //   try {
-  //     // ..without Redux..
-  //     // setLoading(true);
-  //     // setErrorMessage(null);
-
-  //     // wih Redux, loading start and error value set null:
-  //     dispatch(signInStart());
-  //     const res = await axios.post("/api/auth/signup", formData);
-  //     if (res.data.success === false) {
-  //       return dispatch(signInFailure(res.data.message));
-  //     }
-  //     // if response ok
-  //     if (res.statusText) {
-  //       dispatch(signInSuccess(res.data.message));
-  //       navigate("/sign-in");
-  //     }
-  //   } catch (error) {
-  //     dispatch(signInFailure(error.response.data.message));
-  //   }
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.username || !formData.email || !formData.password) {
-      return setErrorMessage('Please fill out all fields.');
+      return setErrorMessage("Please fill out all fields.");
     }
     try {
       setLoading(true);
       setErrorMessage(null);
-      const res = await fetch('/api/auth/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
       const data = await res.json();
@@ -70,8 +34,8 @@ const SignUp = () => {
         return setErrorMessage(data.message);
       }
       setLoading(false);
-      if(res.ok) {
-        navigate('/sign-in');
+      if (res.ok) {
+        navigate("/sign-in");
       }
     } catch (error) {
       setErrorMessage(error.message);
@@ -95,17 +59,15 @@ const SignUp = () => {
               Welcome To BlogHub
             </h1>
             <p className="text-xl  font-bold my-4">
-              Sign up to share your thoughts, follow your favorite authors, and never miss an update.
+              Sign up to share your thoughts, follow your favorite authors, and
+              never miss an update.
             </p>
-            <Link to='/'>
-            <Button color='failure'>Latest articles</Button>
+            <Link to="/">
+              <Button color="failure">Latest articles</Button>
             </Link>
           </div>
         </div>
-        <div
-          className="lg:w-1/2 w-full flex  dark:bg-[#008a007d]  items-center justify-center text-center md:px-16 px-0 z-0"
-         
-        >
+        <div className="lg:w-1/2 w-full flex  dark:bg-[#008a007d]  items-center justify-center text-center md:px-16 px-0 z-0">
           <div
             className="absolute lg:hidden z-10 inset-0 bg-gray-500 bg-no-repeat bg-cover items-center"
             style={backgroundImage}
@@ -113,9 +75,8 @@ const SignUp = () => {
             <div className="absolute bg-[#28ee49b0] opacity-80 inset-0 z-0"></div>
           </div>
           <div className="w-full py-4 z-20">
-              <h1 className="text-4xl font-bold text-black">
-                Sign Up
-              </h1><br />
+            <h1 className="text-4xl font-bold text-black">Sign Up</h1>
+            <br />
 
             <p className="text-gray-100 text-sm text-black dark:text-white">
               Hey enter your details to create your account
