@@ -3,9 +3,8 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaCheckCircle } from 'react-icons/fa';
 const ToastNotification = () => {
-  const names = [
-    "Alex", "Riya", "Carlos", "Maya", "Ethan"
-];
+    const names = ["Arjun", "Priya", "Rahul", "Sneha", "Vikram"];
+
 
 
   // Function to get a random time ago string
