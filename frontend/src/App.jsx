@@ -1,4 +1,4 @@
-import { useLocation, Routes, Route , Navigate} from "react-router-dom";
+import { useLocation, Routes, Route} from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Dashboard from "./pages/Dashboard";
@@ -13,6 +13,8 @@ import PostPage from "./pages/PostPage";
 import PageNotFound from "./pages/PageNotFound";
 import Search from "./pages/Search";
 import ScrollToTop from "./components/ScrollToTop";
+import ToastNotification from "./components/ToastNotification";
+
 const App = () => {
   const location = useLocation();
   const hideHeaderFooter = location.pathname === '/sign-up' || location.pathname === '/sign-in';
@@ -20,6 +22,7 @@ const App = () => {
     <>
       
       <ScrollToTop/>
+      <ToastNotification/>
       {!hideHeaderFooter && <Header />}
         <Routes>
           <Route path="/" element={<Home />} />
