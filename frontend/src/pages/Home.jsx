@@ -4,6 +4,9 @@ import PostCard from "../components/PostCard";
 import heroImg from "../assets/images/hero.svg";
 import { useSelector } from "react-redux";
 import { Typewriter } from "react-simple-typewriter";
+import { Card } from "flowbite-react";
+import { FaInfoCircle } from "react-icons/fa";
+
 const Home = () => {
   const [posts, setPosts] = useState([]);
   const { currentUser } = useSelector((state) => state.user);
@@ -59,8 +62,8 @@ const Home = () => {
             </div>
           </div>
           <p className="msg">
-            Welcome to BlogHub—your source 
-            for inspiring articles and fresh ideas. Explore, learn, and enjoy!
+            Welcome to BlogHub—your source for inspiring articles and fresh
+            ideas. Explore, learn, and enjoy!
           </p>
 
           <span className="inline mr-2">
@@ -71,6 +74,7 @@ const Home = () => {
               Create Post
             </Link>
           </span>
+
           <span className="inline mr-2">
             <button
               onClick={scrollToSection}
@@ -87,14 +91,29 @@ const Home = () => {
       </section>
 
       {/* ................ */}
+ {/* note dont not create unuseful content or post */}
+        <div className="flex flex-wrap justify-center mx-auto max-w-full py-5 p-5" >
+          <Card className="flex flex-row items-center space-x-4 shadow-lg bg-orange-400 bg-opacity-40 backdrop-blur-lg">
+            <FaInfoCircle className="text-orange-400 text-3xl" />
+            <div>
+              <h5 className="text-xl font-semibold">
+                Please focus on creating valuable and meaningful content. Avoid
+                posting irrelevant or redundant information.{" "}
+              </h5>
+              <p className="mt-2 font-semibold text-yellow-800">
+                Let’s focus on content that educates, inspires, and engages!
+              </p>
+            </div>
+          </Card>
+        </div>
       <div id="target-section">
-        <div className="flex flex-col max-w mx-10 ">
+        <div className="flex flex-col max-w mx-auto">
           {posts && posts.length > 0 && (
             <div className="flex flex-col sm:mx-auto">
               <h2 className="text-2xl font-semibold text-center my-5">
                 Recent Posts
               </h2>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap justify-center gap-4 mx-auto max-w-full">
                 {posts.map((post) => (
                   <PostCard key={post._id} post={post} />
                 ))}

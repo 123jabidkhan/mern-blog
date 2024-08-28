@@ -100,7 +100,7 @@ const SignUp = () => {
                 <input
                   className="w-full px-5 py-3 text-[black] rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                   type="email"
-                  placeholder="name@company.com"
+                  placeholder="name@gmail.com"
                   name="email"
                   onChange={handleChange}
                   value={formData.email}
@@ -136,14 +136,22 @@ const SignUp = () => {
               </div>
               <div>
                 {errorMessage && (
-                  <span className="text-red-500 text-sm">{errorMessage}</span>
+                  <span className="text-[white] text-sm font-bold">{errorMessage}</span>
                 )}
               </div>
               {/* signup wih google button */}
-              <div className=" pb-2 pt-4">
+              <div>
                 <OAuth />
               </div>
-              <p className="mt-6 text-sm  text-black text-center">
+              <div className="text-center">
+          <Link
+            to="/"
+            className="text-sm text-red-600 font-bold hover:underline hover:text-red-800"
+          >
+            ← Back to Home
+          </Link>
+        </div>
+              <p className="mt-2 text-sm  text-black text-center">
                 Already have an account?{" "}
                 <Link to="/sign-in" className="text-black font-bold">
                   Sign In

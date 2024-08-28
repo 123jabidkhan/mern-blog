@@ -95,7 +95,7 @@ const SignIn = () => {
                 <input
                   className="w-full px-5 py-3 text-[black] rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                   type="email"
-                  placeholder="name@company.com"
+                  placeholder="name@gmail.com"
                   name="email"
                   onChange={handleChange}
                   value={formData.email}
@@ -131,20 +131,31 @@ const SignIn = () => {
               </div>
               <div>
                 {errorMessage && (
-                  <span className="text-red-500 text-sm">{errorMessage}</span>
+                  <span className="text-[white] font-bold text-sm">{errorMessage}</span>
                 )}
               </div>
               {/* signup wih google button */}
-              <div className=" pb-2 pt-4">
+              <div className="pt-4">
                 <OAuth />
+               
               </div>
-              <p className="mt-6 text-sm  text-black text-center">
+              <div className="text-center">
+          <Link
+            to="/"
+            className="text-sm text-red-600 font-bold hover:underline hover:text-red-800"
+          >
+            ← Back to Home
+          </Link>
+        </div>
+              <p className="mt-2 text-sm  text-black text-center">
                 if you are new user create an account?{" "}
                 <Link to="/sign-up" className="text-black font-bold">
                   Sign Up
                 </Link>
               </p>
-              <div className="p-4 text-center right-0 left-0 flex justify-center space-x-4 mt-16 lg:hidden "></div>
+              
+              {/* <div className="p-4 text-center right-0 left-0 flex justify-center space-x-4 mt-16 lg:hidden "></div> */}
+            
             </form>
           </div>
         </div>

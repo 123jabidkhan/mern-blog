@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate} from "react-router-dom";
 import {
   HiUser,
   HiDocumentText,
@@ -16,6 +16,7 @@ import { MdLogout } from "react-icons/md";
 
 const DashSidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [tab, setTab] = useState("");
   const [open, setOpen] = useState(false);
@@ -73,6 +74,7 @@ const DashSidebar = () => {
         console.log(data.message);
       } else {
         dispatch(signoutSuccess());
+        navigate('/sign-in')
       }
     } catch (error) {
       console.log(error.message);

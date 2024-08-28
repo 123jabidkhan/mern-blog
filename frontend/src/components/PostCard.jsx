@@ -20,7 +20,7 @@ const PostCard = ({ post }) =>{
   },[])
   return (
     
-    <div className="m-2 max-w-sm  rounded-xl overflow-hidden shadow-lg bg-gradient-to-b from-blue-100 to-pink-200 hover:bg-gradient-to-b hover:from-[#f5e0e0] hover:to-[#ffc2c7f3] transition-all duration-300 ease-in-out transform hover:scale-105">
+    <div className="min-w-[250px] max-w-[350px] w-full m-4  rounded-xl overflow-hidden shadow-lg bg-gradient-to-b from-blue-100 to-pink-200 hover:bg-gradient-to-b hover:from-[#f5e0e0] hover:to-[#ffc2c7f3] transition-all duration-300 ease-in-out transform hover:scale-105">
     <Link  to={`/post/${post.slug}`}>
       <img
         className="w-full h-48 object-cover object-center"

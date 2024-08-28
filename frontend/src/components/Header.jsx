@@ -1,13 +1,13 @@
 import { Button, TextInput, Navbar, Avatar } from "flowbite-react";
-import {useState, useEffect} from 'react';
-import { Link, useLocation , useNavigate} from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaSun, FaMoon } from "react-icons/fa";
 import { Dropdown } from "flowbite-react";
 import { MdLogout } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice";
-import {signoutSuccess} from '../redux/user/userSlice';
+import { signoutSuccess } from "../redux/user/userSlice";
 
 const Header = () => {
   const path = useLocation().pathname;
@@ -17,25 +17,26 @@ const Header = () => {
   const { currentUser } = useSelector((state) => state.user);
   const { theme } = useSelector((state) => state.theme);
   const dispatch = useDispatch();
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
-    const searchTermFromUrl = urlParams.get('searchTerm');
+    const searchTermFromUrl = urlParams.get("searchTerm");
     if (searchTermFromUrl) {
       setSearchTerm(searchTermFromUrl);
     }
   }, [location.search]);
   const handleSignout = async () => {
     try {
-      const res = await fetch('/api/user/signout', {
-        method: 'POST',
+      const res = await fetch("/api/user/signout", {
+        method: "POST",
       });
       const data = await res.json();
       if (!res.ok) {
         console.log(data.message);
       } else {
         dispatch(signoutSuccess());
+        navigate("/sign-in");
       }
     } catch (error) {
       console.log(error.message);
@@ -43,7 +44,7 @@ const Header = () => {
   };
   // when user keydown "enter" event call handleSubmit()
   const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       event.preventDefault();
       handleSubmit();
     }
@@ -51,7 +52,7 @@ const Header = () => {
   // when user click on search button handleSubmit() call
   const handleSubmit = () => {
     const urlParams = new URLSearchParams(location.search);
-    urlParams.set('searchTerm', searchTerm);
+    urlParams.set("searchTerm", searchTerm);
     const searchQuery = urlParams.toString();
     navigate(`/search?${searchQuery}`);
   };
@@ -62,8 +63,7 @@ const Header = () => {
         className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white"
       >
         <span className="px-2 py-1 bg-gradient-to-r from-[#ff5360]  to-green-400 rounded-lg text-white">
-          Blog Hub
-          &nbsp;&nbsp;&nbsp;&nbsp;
+          Blog Hub &nbsp;&nbsp;&nbsp;&nbsp;
         </span>
       </Link>
       <form className="flex xs:hidden">
@@ -75,11 +75,13 @@ const Header = () => {
           onKeyDown={handleKeyDown}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <AiOutlineSearch onClick={handleSubmit} className="w-8 h-8 mt-1 -ml-10 z-10 cursor-pointer text-[#ff5360] transition-transform duration-200 ease-in-out hover:scale-125 xs:hidden" />
+        <AiOutlineSearch
+          onClick={handleSubmit}
+          className="w-8 h-8 mt-1 -ml-10 z-10 cursor-pointer text-[#ff5360] transition-transform duration-200 ease-in-out hover:scale-125 xs:hidden"
+        />
       </form>
       {/* <Button  color="gray" pill> */}
       {/* </Button> */}
-
       <div className="flex gap-2 md:order-1">
         <Button
           className="w-12 h-10 hover:text-[#ff5360]"
@@ -87,7 +89,11 @@ const Header = () => {
           pill
           onClick={() => dispatch(toggleTheme())}
         >
-          {theme === "light" ? <FaSun  className="hover:text-[#ff5360]"/> : <FaMoon className="hover:text-[#ff5360]" />}
+          {theme === "light" ? (
+            <FaSun className="hover:text-[#ff5360]" />
+          ) : (
+            <FaMoon className="hover:text-[#ff5360]" />
+          )}
         </Button>
         {currentUser ? (
           <Dropdown
@@ -96,7 +102,6 @@ const Header = () => {
             label={
               <Avatar alt="user" img={currentUser.profilePicture} rounded />
             }
-            
           >
             <Dropdown.Header>
               <span className="block text-sm">{currentUser.username}</span>
@@ -104,26 +109,45 @@ const Header = () => {
                 {currentUser.email}
               </span>
             </Dropdown.Header>
+           
+            <Link to="/" className="hover:text-[#ff5360] lg:hidden md:hidden">
+              <Dropdown.Item>Home</Dropdown.Item>
+            </Link>
+            <Link
+              to="/about"
+              className="hover:text-[#ff5360] lg:hidden md:hidden"
+            >
+              <Dropdown.Item>About</Dropdown.Item>
+            </Link>
+            <a
+              href="https://jabid-portfolio.netlify.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#ff5360] lg:hidden md:hidden"
+            >
+              <Dropdown.Item>Portfolio</Dropdown.Item>
+            </a>
+            <Dropdown.Divider />
+
             <Link to={"/dashboard?tab=profile"}>
               <Dropdown.Item>Profile</Dropdown.Item>
             </Link>
 
-            <Link  to="/dashboard?tab=dash" className="hover:text-[#ff5360] lg:hidden md:hidden">
-            <Dropdown.Item>Dashboard</Dropdown.Item>
-          </Link>
+            <Link
+              to="/dashboard?tab=dash"
+              className="hover:text-[#ff5360] lg:hidden md:hidden"
+            >
+              <Dropdown.Item>Dashboard</Dropdown.Item>
+            </Link>
             <Dropdown.Divider />
-            <Link  to="/" className="hover:text-[#ff5360] lg:hidden md:hidden">
-            <Dropdown.Item>Home</Dropdown.Item>
-          </Link>
-          <Link  to="/about" className="hover:text-[#ff5360] lg:hidden md:hidden">
-            <Dropdown.Item>About</Dropdown.Item>
-          </Link>
-         
-            <Dropdown.Item icon={MdLogout} onClick={handleSignout}>Sign out</Dropdown.Item>
+
+            <Dropdown.Item icon={MdLogout} onClick={handleSignout}>
+              Sign out
+            </Dropdown.Item>
           </Dropdown>
         ) : (
           <Link to="/sign-in">
-            <Button style={{background:"#ff5360"}} outline>
+            <Button style={{ background: "#ff5360" }} outline>
               Sign In
             </Button>
           </Link>
@@ -142,17 +166,25 @@ const Header = () => {
             About
           </Link>
         </Navbar.Link>
-        {
-          ( currentUser && currentUser?.isAdmin) && (
-            <Navbar.Link active={path === "/projects"} as={"div"}>
-          <Link to="/dashboard?tab=dash" className="hover:text-[#ff5360]">
-            Dashboard
-          </Link>
+        <Navbar.Link as={"div"}>
+          <a
+            href="https://jabid-portfolio.netlify.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[#ff5360]"
+          >
+            Portfolio
+          </a>
         </Navbar.Link>
-          )
-        }
-        
-      </Navbar.Collapse> 
+
+        {currentUser && currentUser?.isAdmin && (
+          <Navbar.Link active={path === "/projects"} as={"div"}>
+            <Link to="/dashboard?tab=dash" className="hover:text-[#ff5360]">
+              Dashboard
+            </Link>
+          </Navbar.Link>
+        )}
+      </Navbar.Collapse>
     </Navbar>
   );
 };
