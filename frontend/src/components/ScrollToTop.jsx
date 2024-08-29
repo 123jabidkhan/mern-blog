@@ -33,7 +33,7 @@ const ScrollToTp = () => {
       {showButton && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-4 z-10 right-4 p-3 rounded-full bg-black dark:bg-white dark:text-black shadow-lg  transition-transform transform hover:scale-110"
+          className="fixed bottom-4 z-10 right-4 p-3 rounded-full bg-pink-800 text-white dark:bg-white dark:text-black shadow-lg  transition-transform transform hover:scale-110"
           aria-label="Scroll to top"
         >
           <HiArrowNarrowUp className="w-6 h-6" />
